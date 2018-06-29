@@ -42,6 +42,7 @@
 				display: flex;
 				justify-content: flex-start;
 				overflow-x: scroll;
+				padding: 1px 15px;
 			}
 			.inputBoxOptionSet::-webkit-scrollbar {
 				display: none;
@@ -50,7 +51,7 @@
 				border-right: 1px solid #aaa;
 				display: flex;
 				justify-content: flex-start;
-				padding: 5px;
+				padding: 3px 5px;
 			}
 			.inputBoxOption-child {
 				display: flex;
@@ -65,13 +66,15 @@
 				cursor: pointer;
 				font-size: 16px;
 				padding: 0;
+				outline: none !important;
 				/*font-weight: 600;*/
 			}
-			.inputBoxOption-child-view {
-				padding: 5px 10px;
+			.inputBoxOption-child-view .inputBoxOption-input,
+			.inputBoxOption-child-view:not(.withInput) {
+				padding: 4px 8px;
 			}
-			.inputBoxOption-child-option ~ .inputBoxOption-child-view {
-				padding-right: 5px;
+			.inputBoxOption-child-option ~ .inputBoxOption-child-view:not(.withInput) {
+				padding-right: 4px;
 			}
 			.inputBoxOption-child-option {
 				padding: 5px;
@@ -79,27 +82,91 @@
 			.inputBoxOption-child-option:hover {
 				background: #d9d9d9 !important;
 			}
-			.active .inputBoxOption-child-option:hover {
+			:active .inputBoxOption-child-option:hover,
+			.active:not(.noActive) .inputBoxOption-child-option:hover {
 				background: #ccc !important;
 			}
-			.inputBoxOption-child.active {
+			.inputBoxOption-child:active,
+			.inputBoxOption-child.active:not(.noActive) {
 				background: #ddd !important;
 				outline: none;
 			}
 			.inputBoxOption-child:hover,
-			.inputBoxOption-child.active {
+			.inputBoxOption-child:active,
+			.inputBoxOption-child.active:not(.noActive) {
 				color: #000000;
 			}
 			.inputBoxOption-child:hover {
 				box-shadow: inset 1px 1px 3px 0 #dfdfdf;
 				background: #eee;
 			}
-			.inputBoxOption-child:focus {
-				outline: none;
+			.inputBoxOption-input {
+				border: 1px solid transparent;
+				background: transparent;
+				color: inherit;
+				font: inherit;
+				padding: 5px 8px;
+				cursor: text;
+				outline: none !important;
+				font-size: 14px;
+				font-weight: 600;
+			}
+			.inputBoxOption-input:focus {
+				background: #fff;
+				border-color: #0066ff;
+				box-shadow: inset 1px 1px 3px 1px #ddd;
+			}
+			.inputBoxOption-input[type="text"] {
+				width: 80px;
+			}
+			.inputBoxOption-input[type="number"] {
+				width: 30px;
+				-moz-appearance: textfield;
+			}
+			.inputBoxOption-input[type=number]::-webkit-inner-spin-button, 
+			.inputBoxOption-input[type=number]::-webkit-outer-spin-button { 
+				-webkit-appearance: none; 
 			}
 		</style>
 
 		<div class="inputBoxOptionSet" contenteditable-family="f1">
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child noActive" child-function="undoaction">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-undo"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child noActive" child-function="redoaction">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-repeat"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child noActive" child-function="printaction">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-print"></i>
+					</span>
+				</button>
+			</div>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child active-no-stay" child-function="fontStyle">
+					<span class="inputBoxOption-child-option">
+						<i class="fa fa-caret-down"></i>
+					</span>
+					<span class="inputBoxOption-child-view withInput">
+						<input type="text" class="inputBoxOption-input no-active-trigger" name="" value="Arial" placeholder="">
+					</span>
+				</button>
+			</div>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child active-no-stay" child-function="fontSize">
+					<span class="inputBoxOption-child-option">
+						<i class="fa fa-caret-down"></i>
+					</span>
+					<span class="inputBoxOption-child-view withInput">
+						<input type="number" class="inputBoxOption-input no-active-trigger" name="" value="12" placeholder="">
+					</span>
+				</button>
+			</div>
 			<div class="inputBoxOption-child-group">
 				<button class="inputBoxOption-child" child-function="italic">
 					<span class="inputBoxOption-child-view">
@@ -207,8 +274,7 @@
 		$('.inputBoxOptionSet').on('click', '.inputBoxOption-child', function(event) {
 			event.preventDefault();
 			let clickedOptionButtonJsref = $(this);
-
-			if(clickedOptionButtonJsref.hasClass('active')) 
+			if(clickedOptionButtonJsref.hasClass('active') && $(event.target).closest('.no-active-trigger:focus').length == 0) 
 			{
 				clickedOptionButtonJsref.removeClass('active')
 			}
