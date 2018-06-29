@@ -275,14 +275,6 @@
 			event.preventDefault();
 			buttonChildRef = this;
 			checkAndSetActive(buttonChildRef);
-
-			$(document).on('click', function closeOnOutOfFocus(ev){
-				console.log("asd", $(event.target))
-				if($(event.target).closest('.inputBoxOption-child').length == 0)
-				{
-					checkAndSetActive(buttonChildRef, true);
-				}
-			})
 		});
 
 		function checkAndSetActive(currentButton, isUsingJs=false)
@@ -296,6 +288,16 @@
 			{
 				console.log("sdfsd")
 				clickedOptionButtonJsref.addClass('active')
+				if(clickedOptionButtonJsref.hasClass('active-no-stay'))
+				{
+					$(document).on('click', function closeOnOutOfFocus(ev){
+						if($(ev.target).closest(clickedOptionButtonJsref).length == 0)
+						{
+							checkAndSetActive(clickedOptionButtonJsref, true);
+							$(document).off('click', closeOnOutOfFocus)
+						}
+					})
+				}
 			}
 		}
 
