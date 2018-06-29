@@ -42,7 +42,7 @@
 				display: flex;
 				justify-content: flex-start;
 				overflow-x: scroll;
-				padding: 1px 15px;
+				padding: 0 15px;
 			}
 			.inputBoxOptionSet::-webkit-scrollbar {
 				display: none;
@@ -273,17 +273,35 @@
 	<script type="text/javascript">
 		$('.inputBoxOptionSet').on('click', '.inputBoxOption-child', function(event) {
 			event.preventDefault();
-			let clickedOptionButtonJsref = $(this);
-			if(clickedOptionButtonJsref.hasClass('active') && $(event.target).closest('.no-active-trigger:focus').length == 0) 
+			buttonChildRef = this;
+			checkAndSetActive(buttonChildRef);
+
+			$(document).on('click', function closeOnOutOfFocus(ev){
+				console.log("asd", $(event.target))
+				if($(event.target).closest('.inputBoxOption-child').length == 0)
+				{
+					checkAndSetActive(buttonChildRef, true);
+				}
+			})
+		});
+
+		function checkAndSetActive(currentButton, isUsingJs=false)
+		{
+			let clickedOptionButtonJsref = $(currentButton);
+			if(clickedOptionButtonJsref.hasClass('active') && (isUsingJs || $(event.target).closest('.no-active-trigger').length == 0)) 
 			{
 				clickedOptionButtonJsref.removeClass('active')
 			}
 			else
 			{
+				console.log("sdfsd")
 				clickedOptionButtonJsref.addClass('active')
 			}
+		}
 
-		});
+		// $('.inputBoxOption-input').focusout(function(event) {
+		// 	checkAndSetActive($(this).closest('.inputBoxOption-child'), true);
+		// });
 	</script>
 </body>
 </html>
