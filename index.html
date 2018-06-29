@@ -2,9 +2,15 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title></title>
+	<style type="text/css">
+		* {
+			font-family: inherit;
+		}
+	</style>
 </head>
-<body style="padding: 60px; background: #f1f3f6;">
+<body style="padding: 60px; background: #f1f3f6; font-family: serif;">
 	<div style="background: #eee; padding: 20px;">
 				
 
@@ -17,30 +23,99 @@
 				display: flex;
 				justify-content: flex-start;
 			}
+			.inputBoxOption-child-group {
+				border-right: 1px solid #aaa;
+				display: flex;
+				justify-content: flex-start;
+				padding: 5px;
+			}
 			.inputBoxOption-child {
-				padding: 7px 10px;
+				padding: 5px 10px;
 				background: none;
 				border: none;
-				border-right: 1px solid #aaa;
-				font-size: 18px;
-			}
-			.inputBoxOption-child:hover,
-			.inputBoxOption-child:focus {
-				box-shadow: inset 1px 1px 2px 0 #ccc;
-				outline: none;
+				/*border-right: 1px solid #888;*/
+				margin: 0 1px;
+				color: #000000b3;
+				cursor: pointer;
+				font-size: 16px;
+				/*font-weight: 600;*/
 			}
 			.inputBoxOption-child.active {
-				box-shadow: inset 1px 1px 2px 0 #ccc, inset 1px 1px 2px 0 #ccc;
+				background: #ddd !important;
+				outline: none;
+			}
+			.inputBoxOption-child:hover,
+			.inputBoxOption-child.active {
+				color: #000000;
+			}
+			.inputBoxOption-child:hover {
+				box-shadow: inset 1px 1px 3px 0 #dfdfdf;
 				background: #eee;
+			}
+			.inputBoxOption-child:focus {
 				outline: none;
 			}
 		</style>
-
+		
 		<div class="inputBoxOptionSet" contenteditable-family="f1">
-			<button class="inputBoxOption-child" child-function="bold">
-				B
-			</button>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child" child-function="italic">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-italic"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="bold">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-bold"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="underline">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-underline"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="highlight">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-pencil"></i>
+					</span>
+				</button>
+			</div>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child" child-function="addLink">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-link"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="addImage">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-picture-o"></i>
+					</span>
+				</button>
+			</div>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child" child-function="alignLeft">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-align-left"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="alignCenter">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-align-center"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="alignRight">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-align-right"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="alignJustify">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-align-justify"></i>
+					</span>
+				</button>
+			</div>
 		</div>
+
 
 		<style type="text/css" media="screen">
 			.inputBox {
@@ -64,7 +139,15 @@
 			event.preventDefault();
 			let clickedOptionButtonJsref = $(this);
 
-			clickedOptionButtonJsref.addClass('active')
+			if(clickedOptionButtonJsref.hasClass('active')) 
+			{
+				clickedOptionButtonJsref.removeClass('active')
+			}
+			else
+			{
+				clickedOptionButtonJsref.addClass('active')
+			}
+
 		});
 	</script>
 </body>
