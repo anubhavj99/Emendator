@@ -54,7 +54,9 @@
 			}
 			.inputBoxOption-child {
 				display: flex;
-				padding: 5px 10px;
+				justify-content: flex-start;
+				flex-direction: row-reverse;
+				align-items: center;
 				background: none;
 				border: none;
 				/*border-right: 1px solid #888;*/
@@ -62,10 +64,23 @@
 				color: #000000b3;
 				cursor: pointer;
 				font-size: 16px;
+				padding: 0;
 				/*font-weight: 600;*/
 			}
+			.inputBoxOption-child-view {
+				padding: 5px 10px;
+			}
+			.inputBoxOption-child-option ~ .inputBoxOption-child-view {
+				padding-right: 5px;
+			}
 			.inputBoxOption-child-option {
-				padding-left: 5px;
+				padding: 5px;
+			}
+			.inputBoxOption-child-option:hover {
+				background: #d9d9d9 !important;
+			}
+			.active .inputBoxOption-child-option:hover {
+				background: #ccc !important;
 			}
 			.inputBoxOption-child.active {
 				background: #ddd !important;
@@ -150,11 +165,11 @@
 			</div>
 			<div class="inputBoxOption-child-group">
 				<button class="inputBoxOption-child" child-function="alignCenter">
-					<span class="inputBoxOption-child-view">
-						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwLjEyMyA2MC4xMjMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYwLjEyMyA2MC4xMjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPGc+Cgk8cGF0aCBkPSJNNTcuMTI0LDUxLjg5M0gxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsM1M1OC43ODEsNTEuODkzLDU3LjEyNCw1MS44OTN6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8cGF0aCBkPSJNNTcuMTI0LDMzLjA2MkgxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsMyAgIEM2MC4xMjQsMzEuNzE5LDU4Ljc4MSwzMy4wNjIsNTcuMTI0LDMzLjA2MnoiIGZpbGw9IiMwMDAwMDAiLz4KCTxwYXRoIGQ9Ik01Ny4xMjQsMTQuMjMxSDE2LjkyYy0xLjY1NywwLTMtMS4zNDMtMy0zczEuMzQzLTMsMy0zaDQwLjIwM2MxLjY1NywwLDMsMS4zNDMsMywzUzU4Ljc4MSwxNC4yMzEsNTcuMTI0LDE0LjIzMXoiIGZpbGw9IiMwMDAwMDAiLz4KCTxjaXJjbGUgY3g9IjQuMDI5IiBjeT0iMTEuNDYzIiByPSI0LjAyOSIgZmlsbD0iIzAwMDAwMCIvPgoJPGNpcmNsZSBjeD0iNC4wMjkiIGN5PSIzMC4wNjIiIHI9IjQuMDI5IiBmaWxsPSIjMDAwMDAwIi8+Cgk8Y2lyY2xlIGN4PSI0LjAyOSIgY3k9IjQ4LjY2MSIgcj0iNC4wMjkiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
-					</span>
 					<span class="inputBoxOption-child-option">
 						<i class="fa fa-caret-down"></i>
+					</span>
+					<span class="inputBoxOption-child-view">
+						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwLjEyMyA2MC4xMjMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYwLjEyMyA2MC4xMjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPGc+Cgk8cGF0aCBkPSJNNTcuMTI0LDUxLjg5M0gxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsM1M1OC43ODEsNTEuODkzLDU3LjEyNCw1MS44OTN6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8cGF0aCBkPSJNNTcuMTI0LDMzLjA2MkgxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsMyAgIEM2MC4xMjQsMzEuNzE5LDU4Ljc4MSwzMy4wNjIsNTcuMTI0LDMzLjA2MnoiIGZpbGw9IiMwMDAwMDAiLz4KCTxwYXRoIGQ9Ik01Ny4xMjQsMTQuMjMxSDE2LjkyYy0xLjY1NywwLTMtMS4zNDMtMy0zczEuMzQzLTMsMy0zaDQwLjIwM2MxLjY1NywwLDMsMS4zNDMsMywzUzU4Ljc4MSwxNC4yMzEsNTcuMTI0LDE0LjIzMXoiIGZpbGw9IiMwMDAwMDAiLz4KCTxjaXJjbGUgY3g9IjQuMDI5IiBjeT0iMTEuNDYzIiByPSI0LjAyOSIgZmlsbD0iIzAwMDAwMCIvPgoJPGNpcmNsZSBjeD0iNC4wMjkiIGN5PSIzMC4wNjIiIHI9IjQuMDI5IiBmaWxsPSIjMDAwMDAwIi8+Cgk8Y2lyY2xlIGN4PSI0LjAyOSIgY3k9IjQ4LjY2MSIgcj0iNC4wMjkiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
 					</span>
 				</button>
 				<button class="inputBoxOption-child" child-function="indent">
