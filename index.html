@@ -112,15 +112,15 @@
 				font-weight: 600;
 			}
 			.inputBoxOption-input:focus {
-				background: #fff;
-				border-color: #0066ff;
+				/* background: #fff; */
+				/* border-color: #0066ff; */
 				box-shadow: inset 1px 1px 3px 1px #ddd;
 			}
 			.inputBoxOption-input[type="text"] {
 				width: 80px;
 			}
 			.inputBoxOption-input[type="number"] {
-				width: 30px;
+				width: 50px;
 				-moz-appearance: textfield;
 			}
 			.inputBoxOption-input[type=number]::-webkit-inner-spin-button, 
@@ -149,21 +149,35 @@
 			</div>
 			<div class="inputBoxOption-child-group">
 				<button class="inputBoxOption-child active-no-stay" child-function="fontStyle">
-					<span class="inputBoxOption-child-option">
+					<!-- <span class="inputBoxOption-child-option">
 						<i class="fa fa-caret-down"></i>
-					</span>
+					</span> -->
 					<span class="inputBoxOption-child-view withInput">
-						<input type="text" class="inputBoxOption-input no-active-trigger" name="" value="Arial" placeholder="">
+						<select class="inputBoxOption-input no-active-trigger" type="text" name="" value="Serif">
+							<option value="Serif">Serif</option>
+							<option value="Sans-Serif">Sans-Serif</option>
+						</select>
+						<!-- <input type="text" class="inputBoxOption-input no-active-trigger" name="" value="Serif" placeholder=""> -->
 					</span>
 				</button>
 			</div>
 			<div class="inputBoxOption-child-group">
 				<button class="inputBoxOption-child active-no-stay" child-function="fontSize">
-					<span class="inputBoxOption-child-option">
+					<!-- <span class="inputBoxOption-child-option">
 						<i class="fa fa-caret-down"></i>
-					</span>
+					</span> -->
 					<span class="inputBoxOption-child-view withInput">
-						<input type="number" class="inputBoxOption-input no-active-trigger" name="" value="12" placeholder="">
+						<select class="inputBoxOption-input no-active-trigger" name="" value="14" type="number">
+							<option value="10">10</option>
+							<option value="12">12</option>
+							<option value="14">14</option>
+							<option value="16">16</option>
+							<option value="20">20</option>
+							<option value="24">24</option>
+							<option value="28">28</option>
+							<option value="32">32</option>
+						</select>
+						<!-- <input type="number" class="inputBoxOption-input no-active-trigger" name="" value="12" placeholder=""> -->
 					</span>
 				</button>
 			</div>
@@ -201,7 +215,7 @@
 					</span>
 				</button>
 			</div>
-			<div class="inputBoxOption-child-group">
+			<div class="inputBoxOption-child-group" child-selection="unique">
 				<button class="inputBoxOption-child" child-function="alignLeft">
 					<span class="inputBoxOption-child-view">
 						<i class="fa fa-align-left"></i>
@@ -239,14 +253,21 @@
 						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwLjEyMyA2MC4xMjMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYwLjEyMyA2MC4xMjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPGc+Cgk8cGF0aCBkPSJNNTcuMTI0LDUxLjg5M0gxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsM1M1OC43ODEsNTEuODkzLDU3LjEyNCw1MS44OTN6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8cGF0aCBkPSJNNTcuMTI0LDMzLjA2MkgxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsMyAgIEM2MC4xMjQsMzEuNzE5LDU4Ljc4MSwzMy4wNjIsNTcuMTI0LDMzLjA2MnoiIGZpbGw9IiMwMDAwMDAiLz4KCTxwYXRoIGQ9Ik01Ny4xMjQsMTQuMjMxSDE2LjkyYy0xLjY1NywwLTMtMS4zNDMtMy0zczEuMzQzLTMsMy0zaDQwLjIwM2MxLjY1NywwLDMsMS4zNDMsMywzUzU4Ljc4MSwxNC4yMzEsNTcuMTI0LDE0LjIzMXoiIGZpbGw9IiMwMDAwMDAiLz4KCTxjaXJjbGUgY3g9IjQuMDI5IiBjeT0iMTEuNDYzIiByPSI0LjAyOSIgZmlsbD0iIzAwMDAwMCIvPgoJPGNpcmNsZSBjeD0iNC4wMjkiIGN5PSIzMC4wNjIiIHI9IjQuMDI5IiBmaWxsPSIjMDAwMDAwIi8+Cgk8Y2lyY2xlIGN4PSI0LjAyOSIgY3k9IjQ4LjY2MSIgcj0iNC4wMjkiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
 					</span>
 				</button>
-				<button class="inputBoxOption-child" child-function="indent">
+				<button class="inputBoxOption-child noActive" child-function="indent">
 					<span class="inputBoxOption-child-view">
 						<i class="fa fa-indent"></i>
 					</span>
 				</button>
-				<button class="inputBoxOption-child" child-function="outdent">
+				<button class="inputBoxOption-child noActive" child-function="outdent">
 					<span class="inputBoxOption-child-view">
 						<i class="fa fa-outdent"></i>
+					</span>
+				</button>
+			</div>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child" child-function="addPoll">
+					<span class="inputBoxOption-child-view">
+						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTAuNjY3IDQ5MC42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ5MC42NjcgNDkwLjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBkPSJNMTA1LjUxNSwxNDYuOTg3YzQuNjA4LDMuNjkxLDExLjMwNywyLjk2NSwxNC45OTctMS42NDNjMzAuNjEzLTM4LjE0NCw3Ni4wNzUtNjAuMDExLDEyNC44LTYwLjAxMSAgICAgYzQ4LjcyNSwwLDk0LjE4NywyMS44NjcsMTI0LjgsNjAuMDExYzIuMTEyLDIuNjI0LDUuMjI3LDMuOTg5LDguMzQxLDMuOTg5YzIuMzQ3LDAsNC42OTMtMC43NjgsNi42NTYtMi4zNDcgICAgIGM0LjU4Ny0zLjY5MSw1LjMzMy0xMC40MTEsMS42NDMtMTQuOTk3QzM1Mi4wNjQsODguNzg5LDMwMC41MjMsNjQsMjQ1LjMxMiw2NGMtNTUuMjExLDAtMTA2Ljc3MywyNC43ODktMTQxLjQ0LDY3Ljk4OSAgICAgQzEwMC4xODEsMTM2LjU3NiwxMDAuOTI4LDE0My4yOTYsMTA1LjUxNSwxNDYuOTg3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMjg4LDI5OC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3YtNzQuNjY3SDMyMGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3UzMyNS44ODgsMTkyLDMyMCwxOTIgICAgIGgtNjRjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdzNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdoMjEuMzMzVjI4OEMyNzcuMzMzLDI5My44ODgsMjgyLjExMiwyOTguNjY3LDI4OCwyOTguNjY3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTcwLjY2NywyMjR2NDIuNjY3YzAsMTcuNjQzLDE0LjM1NywzMiwzMiwzMmMxNy42NDMsMCwzMi0xNC4zNTcsMzItMzJWMjI0YzAtMTcuNjQzLTE0LjM1Ny0zMi0zMi0zMiAgICAgQzE4NS4wMjQsMTkyLDE3MC42NjcsMjA2LjM1NywxNzAuNjY3LDIyNHogTTIxMy4zMzMsMjI0djQyLjY2N2MwLDUuODg4LTQuNzc5LDEwLjY2Ny0xMC42NjcsMTAuNjY3UzE5MiwyNzIuNTU1LDE5MiwyNjYuNjY3VjIyNCAgICAgYzAtNS44ODgsNC43NzktMTAuNjY3LDEwLjY2Ny0xMC42NjdTMjEzLjMzMywyMTguMTEyLDIxMy4zMzMsMjI0eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMzYxLjM0NCwzNTUuMzI4Yy0zMC41OTIsMzIuMjM1LTcxLjc4Nyw1MC4wMDUtMTE1Ljk4OSw1MC4wMDVjLTQ0LjIwMywwLTg1LjM5Ny0xNy43NDktMTE1Ljk4OS01MC4wMDUgICAgIGMtNC4wMzItNC4yNjctMTAuNzk1LTQuNDM3LTE1LjA4My0wLjQwNWMtNC4yODgsNC4wNTMtNC40NTksMTAuNzk1LTAuNDA1LDE1LjA4M2MzNC42NDUsMzYuNTQ0LDgxLjM0NCw1Ni42NjEsMTMxLjQ1Niw1Ni42NjEgICAgIHM5Ni44MTEtMjAuMTE3LDEzMS40OTktNTYuNjYxYzQuMDMyLTQuMjg4LDMuODYxLTExLjA1MS0wLjQwNS0xNS4wODNDMzcyLjE2LDM1MC44OTEsMzY1LjM5NywzNTEuMDYxLDM2MS4zNDQsMzU1LjMyOHoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPHBhdGggZD0iTTI0NS4zMzMsMEMxMTAuMDU5LDAsMCwxMTAuMDU5LDAsMjQ1LjMzM3MxMTAuMDU5LDI0NS4zMzMsMjQ1LjMzMywyNDUuMzMzczI0NS4zMzMtMTEwLjA1OSwyNDUuMzMzLTI0NS4zMzMgICAgIFMzODAuNjA4LDAsMjQ1LjMzMywweiBNMjQ1LjMzMyw0NjkuMzMzYy0xMjMuNTIsMC0yMjQtMTAwLjQ4LTIyNC0yMjRzMTAwLjQ4LTIyNCwyMjQtMjI0czIyNCwxMDAuNDgsMjI0LDIyNCAgICAgUzM2OC44NTMsNDY5LjMzMywyNDUuMzMzLDQ2OS4zMzN6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTxwYXRoIGQ9Ik0zOTQuNjY3LDI3Ny4zMzNoLTMyVjI1NmgxMC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3MtNC43NzktMTAuNjY3LTEwLjY2Ny0xMC42NjdoLTEwLjY2N3YtMjEuMzMzaDMyICAgICBjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDE5MiwzOTQuNjY3LDE5MkgzNTJjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdWMjg4ICAgICBjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N2g0Mi42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDI3Ny4zMzMsMzk0LjY2NywyNzcuMzMzeiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTE2LjY1MSwyOTEuNzU1bDMyLTg1LjMzM2MyLjA2OS01LjUyNS0wLjcyNS0xMS42NjktNi4yMjktMTMuNzM5Yy01LjU0Ny0yLjA0OC0xMS42NjksMC43MDQtMTMuNzM5LDYuMjI5ICAgICBsLTIyLjAxNiw1OC43MDlsLTIyLjAxNi01OC43MDljLTIuMDY5LTUuNTA0LTguMjEzLTguMjU2LTEzLjczOS02LjIyOWMtNS41MDQsMi4wNjktOC4yOTksOC4yMTMtNi4yMjksMTMuNzM5bDMyLDg1LjMzMyAgICAgYzEuNTU3LDQuMTYsNS41NDcsNi45MTIsOS45ODQsNi45MTJDMTExLjEwNCwyOTguNjY3LDExNS4wOTMsMjk1LjkxNSwxMTYuNjUxLDI5MS43NTV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
 					</span>
 				</button>
 			</div>
@@ -271,39 +292,209 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		
+		var selectedTextObjectSet = {}
 		$('.inputBoxOptionSet').on('click', '.inputBoxOption-child', function(event) {
 			event.preventDefault();
-			buttonChildRef = this;
-			checkAndSetActive(buttonChildRef);
+			let buttonChildRef = event.currentTarget;
+			checkAndSetActive(buttonChildRef, event);
+			let buttonChildJsRef = $(event.currentTarget)
+			// let eventName = "content.edit." + buttonChildJsRef.attr('child-function')
+			// $('.inputBox[contenteditable-family="' + buttonChildJsRef.closest('.inputBoxOptionSet').attr('contenteditable-family') + '"]').focus()
+			// buttonChildJsRef.closest('.inputBoxOptionSet').trigger()
 		});
 
-		function checkAndSetActive(currentButton, isUsingJs=false)
+		function checkAndSetActive(currentButton, event, isUsingJs=false)
 		{
 			let clickedOptionButtonJsref = $(currentButton);
 			if(clickedOptionButtonJsref.hasClass('active') && (isUsingJs || $(event.target).closest('.no-active-trigger').length == 0)) 
 			{
-				clickedOptionButtonJsref.removeClass('active')
+				setInactiveButton(clickedOptionButtonJsref)
 			}
 			else
 			{
-				console.log("sdfsd")
-				clickedOptionButtonJsref.addClass('active')
-				if(clickedOptionButtonJsref.hasClass('active-no-stay'))
-				{
-					$(document).on('click', function closeOnOutOfFocus(ev){
-						if($(ev.target).closest(clickedOptionButtonJsref).length == 0)
-						{
-							checkAndSetActive(clickedOptionButtonJsref, true);
-							$(document).off('click', closeOnOutOfFocus)
-						}
-					})
-				}
+				// activate all its functionalities
+
+				// activateActionOfButton(clickedOptionButtonJsref)
+
+				// activate the button
+
+				setActiveButton(clickedOptionButtonJsref)
 			}
 		}
 
-		// $('.inputBoxOption-input').focusout(function(event) {
-		// 	checkAndSetActive($(this).closest('.inputBoxOption-child'), true);
-		// });
+		function setInactiveButton(clickedOptionButton) {
+			let clickedOptionButtonJsref = $(clickedOptionButton)
+			clickedOptionButtonJsref.removeClass('active')
+		}
+
+		function setActiveButton(clickedOptionButton) {
+			let clickedOptionButtonJsref = $(clickedOptionButton)
+			console.log("adding", clickedOptionButtonJsref)
+			clickedOptionButtonJsref.addClass('active')
+			if(clickedOptionButtonJsref.hasClass('active-no-stay'))
+			{
+				console.log("active-no-stay")
+				$(document).on('click', function closeOnOutOfFocus(ev){
+					if($(ev.target).closest(clickedOptionButtonJsref).length == 0)
+					{
+						setInactiveButton(clickedOptionButtonJsref);
+						$(document).off('click', closeOnOutOfFocus)
+					}
+				})
+			}
+		}
+
+		function uniqueChildButtonFunction(event) {
+			let currentButtonJsRef = $(event.currentTarget);
+			let buttonGroupSet = currentButtonJsRef.siblings('[child-function]');
+			buttonGroupSet.each(function(index, el) {
+				setInactiveButton(el)
+			});
+
+		}
+
+		/*$('[child-selection="unique"] [child-function]').on('click', uniqueChildButtonFunction);
+
+		function gatherAndStoreTextObjectForTheContentEditable(event) {
+
+			let textObject = new Object();
+
+		    if (window.getSelection) {
+		        textObject = window.getSelection();
+		    } else if (document.selection && document.selection.createRange ) {
+				textObject = document.selection.createRange();
+		    }
+
+		    selectedTextObjectSet[$(event.currentTarget).attr('contenteditable-family')] = textObject;
+
+		}
+
+		$('[contenteditable="true"].inputBox').on('mousemove', gatherAndStoreTextObjectForTheContentEditable)
+
+		function replaceSelectedTextWithElement(selectedTextObject, replacementTextObject) {
+			if (window.getSelection) {
+			 	if (selectedTextObject.rangeCount) {
+					let range = selectedTextObject.getRangeAt(0);
+					range.deleteContents();
+					range.insertNode(replacementTextObject);
+			 	}
+			} else if (document.selection && document.selection.createRange) {
+			    let range = selectedTextObject;
+			    range.empty();
+
+			    range = replacementText;
+			}
+		}
+
+		$('.inputBox').on('keydown', function() {
+
+		})*/
+
+		function getSelectionObject() {
+			let textObject = new Object();
+		    if (window.getSelection) {
+		        textObject = window.getSelection();
+		    } else if (document.selection && document.selection.createRange ) {
+				textObject = document.selection.createRange();
+		    }
+		    return textObject;
+		}
+
+		function activateActionOfButton(clickedOptionButtonJsref) {
+			let textObject = getSelectionObject()
+		    if(textObject.type == 'Caret') {
+				console.log(textObject.getRangeAt(0))
+				let rangeCaretObj = textObject.getRangeAt(0);
+
+				let rangeSet = document.createRange()
+				// rangeSet.setStart(rangeCaretObj.startContainer, rangeCaretObj.startOffset);
+				$('<span/>').html("wer").appendTo(rangeCaretObj.startContainer)
+				// rangeSet.selectNode(el)
+
+		    } else {
+
+			    let nodeRanges = getSafeRanges(textObject.getRangeAt(0))
+			    console.log(nodeRanges)
+				if(clickedOptionButtonJsref.attr('child-function') == "bold") {
+
+					for( let i=0; i<nodeRanges.length; i++) {
+
+						let boldEl = document.createElement('span')
+						$(boldEl).css('font-weight', '600');
+						nodeRanges[i].surroundContents(boldEl);
+					}
+				}
+				
+		    }
+
+		}
+
+		// $('.inputBox').on('keydown', function(event) {
+		// 	console.log(event.keyCode)
+
+		// })
+
+		function getSafeRanges(dangerous) {
+		    var a = dangerous.commonAncestorContainer;
+		    // Starts -- Work inward from the start, selecting the largest safe range
+		    var s = new Array(0), rs = new Array(0);
+		    if (dangerous.startContainer != a) 
+		    {
+		        for(var i = dangerous.startContainer; i != a; i = i.parentNode) 
+		        {
+		            s.push(i)
+		        }
+		    }
+		    if (0 < s.length) for(var i = 0; i < s.length; i++) {
+		        var xs = document.createRange();
+		        if (i) {
+		            xs.setStartAfter(s[i-1]);
+		            xs.setEndAfter(s[i].lastChild);
+		        }
+		        else {
+					xs.setStart(s[i], dangerous.startOffset);
+					xs.setEndAfter( (s[i].nodeType == Node.TEXT_NODE) ? s[i] : s[i].lastChild);
+		        }
+		        rs.push(xs);
+		    }
+
+		    // Ends -- basically the same code reversed
+		    var e = new Array(0), re = new Array(0);
+		    if (dangerous.endContainer != a)
+		        for(var i = dangerous.endContainer; i != a; i = i.parentNode)
+		            e.push(i);
+		    if (0 < e.length) for(var i = 0; i < e.length; i++) {
+		        var xe = document.createRange();
+		        if (i) {
+		            xe.setStartBefore(e[i].firstChild);
+		            xe.setEndBefore(e[i-1]);
+		        }
+		        else {
+					xe.setStartBefore( (e[i].nodeType == Node.TEXT_NODE) ? e[i] : e[i].firstChild );
+					xe.setEnd(e[i], dangerous.endOffset);
+		        }
+		        re.unshift(xe);
+		    }
+
+		    // Middle -- the uncaptured middle
+		    if ((0 < s.length) && (0 < e.length)) {
+		        var xm = document.createRange();
+		        xm.setStartAfter(s[s.length - 1]);
+		        xm.setEndBefore(e[e.length - 1]);
+		    }
+		    else {
+		        return [dangerous];
+		    }
+
+		    // Concat
+		    rs.push(xm);
+		    response = rs.concat(re);    
+
+		    // Send to Console
+		    return response;
+		}
+
 	</script>
 </body>
 </html>
