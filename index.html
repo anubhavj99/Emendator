@@ -288,11 +288,34 @@
 				box-shadow: 2px 2px 3px 0 #ccc, 2px 2px 5px 1px #bbb;
 			}
 		</style>
-		<div contenteditable="true" class="inputBox" contenteditable-family="f1">
+		<div contenteditable="true" class="inputBox" contenteditable-family="f1" id="content-ed-f1">
 		</div>
 	</div>
 	<script type="text/javascript">
 		
+		var thisContentEditableDiv = $('#content-ed-f1')
+
+		function checkForEachButtonToBeActive() {
+			
+			let thisContentEditableId = thisContentEditableDiv.attr('contenteditable-family')
+			let thisOptionSet = $('.inputBoxOptionSet[contenteditable-family="' + thisContentEditableId + '"]')
+
+			let boldButtonJsRef = thisOptionSet.find('[child-function="bold"]');
+
+			if(document.queryCommandState("bold"))
+			{
+				setActiveButton(boldButtonJsRef)
+			}
+			else
+			{
+				setInactiveButton(boldButtonJsRef)
+			}
+		}
+
+		document.onselectionchange = function() {
+    		checkForEachButtonToBeActive()
+		};
+
 		var selectedTextObjectSet = {}
 		$('.inputBoxOptionSet').on('click', '.inputBoxOption-child', function(event) {
 			event.preventDefault();
@@ -306,16 +329,18 @@
 
 		function checkAndSetActive(currentButton, event, isUsingJs=false)
 		{
+			thisContentEditableDiv.focus();
+
 			let clickedOptionButtonJsref = $(currentButton);
+			// activate/deactivate all its functionalities
+			doActionRelatedActionOfButton(clickedOptionButtonJsref)
+
 			if(clickedOptionButtonJsref.hasClass('active') && (isUsingJs || $(event.target).closest('.no-active-trigger').length == 0)) 
 			{
 				setInactiveButton(clickedOptionButtonJsref)
 			}
 			else
 			{
-				// activate all its functionalities
-
-				// activateActionOfButton(clickedOptionButtonJsref)
 
 				// activate the button
 
@@ -330,7 +355,6 @@
 
 		function setActiveButton(clickedOptionButton) {
 			let clickedOptionButtonJsref = $(clickedOptionButton)
-			console.log("adding", clickedOptionButtonJsref)
 			clickedOptionButtonJsref.addClass('active')
 			if(clickedOptionButtonJsref.hasClass('active-no-stay'))
 			{
@@ -345,6 +369,16 @@
 			}
 		}
 
+		function doActionRelatedActionOfButton(clickedOptionButtonJsref)
+		{
+			let actionProp = clickedOptionButtonJsref.attr('child-function')
+
+			if(actionProp == "bold")
+			{
+				document.execCommand("bold", false, null);
+			}
+		}
+
 		function uniqueChildButtonFunction(event) {
 			let currentButtonJsRef = $(event.currentTarget);
 			let buttonGroupSet = currentButtonJsRef.siblings('[child-function]');
@@ -354,9 +388,9 @@
 
 		}
 
-		/*$('[child-selection="unique"] [child-function]').on('click', uniqueChildButtonFunction);
+		$('[child-selection="unique"] [child-function]').on('click', uniqueChildButtonFunction);
 
-		function gatherAndStoreTextObjectForTheContentEditable(event) {
+		/*function gatherAndStoreTextObjectForTheContentEditable(event) {
 
 			let textObject = new Object();
 
@@ -369,27 +403,6 @@
 		    selectedTextObjectSet[$(event.currentTarget).attr('contenteditable-family')] = textObject;
 
 		}
-
-		$('[contenteditable="true"].inputBox').on('mousemove', gatherAndStoreTextObjectForTheContentEditable)
-
-		function replaceSelectedTextWithElement(selectedTextObject, replacementTextObject) {
-			if (window.getSelection) {
-			 	if (selectedTextObject.rangeCount) {
-					let range = selectedTextObject.getRangeAt(0);
-					range.deleteContents();
-					range.insertNode(replacementTextObject);
-			 	}
-			} else if (document.selection && document.selection.createRange) {
-			    let range = selectedTextObject;
-			    range.empty();
-
-			    range = replacementText;
-			}
-		}
-
-		$('.inputBox').on('keydown', function() {
-
-		})*/
 
 		function getSelectionObject() {
 			let textObject = new Object();
@@ -493,7 +506,7 @@
 
 		    // Send to Console
 		    return response;
-		}
+		}*/
 
 	</script>
 </body>
