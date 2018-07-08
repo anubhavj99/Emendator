@@ -3,7 +3,8 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 	<title></title>
 	<style type="text/css">
 		* {
@@ -30,8 +31,7 @@
 	</style>
 </head>
 <body>
-	<div>
-				
+	<div id="contentEditParent">
 
 		<style type="text/css" media="screen">
 			.inputBoxOptionSet {
@@ -106,10 +106,12 @@
 				color: inherit;
 				font: inherit;
 				padding: 5px 8px;
-				cursor: text;
 				outline: none !important;
 				font-size: 14px;
 				font-weight: 600;
+			}
+			select.inputBoxOption-input {
+				cursor: pointer;
 			}
 			.inputBoxOption-input:focus {
 				/* background: #fff; */
@@ -129,16 +131,16 @@
 			}
 		</style>
 
-		<div class="inputBoxOptionSet" contenteditable-family="f1">
+		<div class="inputBoxOptionSet" contenteditable-family="f1" id="content-ed-f1-toolbar">
 			<div class="inputBoxOption-child-group">
 				<button class="inputBoxOption-child noActive" child-function="undoaction">
 					<span class="inputBoxOption-child-view">
-						<i class="fa fa-undo"></i>
+						<i class="fa fa-undo-alt"></i>
 					</span>
 				</button>
 				<button class="inputBoxOption-child noActive" child-function="redoaction">
 					<span class="inputBoxOption-child-view">
-						<i class="fa fa-repeat"></i>
+						<i class="fa fa-redo-alt"></i>
 					</span>
 				</button>
 				<button class="inputBoxOption-child noActive" child-function="printaction">
@@ -199,7 +201,7 @@
 				</button>
 				<button class="inputBoxOption-child" child-function="highlight">
 					<span class="inputBoxOption-child-view">
-						<i class="fa fa-pencil"></i>
+						<i class="fa fa-highlighter"></i>
 					</span>
 				</button>
 			</div>
@@ -209,9 +211,9 @@
 						<i class="fa fa-link"></i>
 					</span>
 				</button>
-				<button class="inputBoxOption-child" child-function="addImage">
+				<button class="inputBoxOption-child noActive" child-function="addImage">
 					<span class="inputBoxOption-child-view">
-						<i class="fa fa-picture-o"></i>
+						<i class="fa fa-images"></i>
 					</span>
 				</button>
 			</div>
@@ -245,12 +247,14 @@
 				</button>
 			</div>
 			<div class="inputBoxOption-child-group">
-				<button class="inputBoxOption-child" child-function="alignCenter">
-					<span class="inputBoxOption-child-option">
-						<i class="fa fa-caret-down"></i>
-					</span>
+				<button class="inputBoxOption-child noActive" child-function="unorderedListMaker">
 					<span class="inputBoxOption-child-view">
-						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwLjEyMyA2MC4xMjMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYwLjEyMyA2MC4xMjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPGc+Cgk8cGF0aCBkPSJNNTcuMTI0LDUxLjg5M0gxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsM1M1OC43ODEsNTEuODkzLDU3LjEyNCw1MS44OTN6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8cGF0aCBkPSJNNTcuMTI0LDMzLjA2MkgxNi45MmMtMS42NTcsMC0zLTEuMzQzLTMtM3MxLjM0My0zLDMtM2g0MC4yMDNjMS42NTcsMCwzLDEuMzQzLDMsMyAgIEM2MC4xMjQsMzEuNzE5LDU4Ljc4MSwzMy4wNjIsNTcuMTI0LDMzLjA2MnoiIGZpbGw9IiMwMDAwMDAiLz4KCTxwYXRoIGQ9Ik01Ny4xMjQsMTQuMjMxSDE2LjkyYy0xLjY1NywwLTMtMS4zNDMtMy0zczEuMzQzLTMsMy0zaDQwLjIwM2MxLjY1NywwLDMsMS4zNDMsMywzUzU4Ljc4MSwxNC4yMzEsNTcuMTI0LDE0LjIzMXoiIGZpbGw9IiMwMDAwMDAiLz4KCTxjaXJjbGUgY3g9IjQuMDI5IiBjeT0iMTEuNDYzIiByPSI0LjAyOSIgZmlsbD0iIzAwMDAwMCIvPgoJPGNpcmNsZSBjeD0iNC4wMjkiIGN5PSIzMC4wNjIiIHI9IjQuMDI5IiBmaWxsPSIjMDAwMDAwIi8+Cgk8Y2lyY2xlIGN4PSI0LjAyOSIgY3k9IjQ4LjY2MSIgcj0iNC4wMjkiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+						<i class="fa fa-list-ul"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child noActive" child-function="orderedListMaker">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-list-ol"></i>
 					</span>
 				</button>
 				<button class="inputBoxOption-child noActive" child-function="indent">
@@ -271,6 +275,13 @@
 					</span>
 				</button>
 			</div>
+			<div class="inputBoxOption-child-group">
+				<button class="inputBoxOption-child noActive" child-function="removeFormatting">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-eraser"></i>
+					</span>
+				</button>
+			</div>
 		</div>
 
 
@@ -282,113 +293,316 @@
 				box-shadow: 2px 2px 3px 0 #ccc;
 				border-radius: 5px;
 				cursor: text;
+				outline: none;
+				caret-color: grey;
 			}
 			.inputBox:hover,
 			.inputBox:focus {
-				box-shadow: 2px 2px 3px 0 #ccc, 2px 2px 5px 1px #bbb;
+				box-shadow: 2px 2px 3px 0 #ccc, 2px 2px 5px 1px #aaa;
+			}
+			ol {
+				list-style-type: decimal;
+			}
+			ol ol {
+				list-style-type: lower-roman;
+			}
+			ol ol ol {
+				list-style-type: lower-latin;
 			}
 		</style>
-		<div contenteditable="true" class="inputBox" contenteditable-family="f1" id="content-ed-f1">
+		<div class="inputBox" contenteditable-family="f1" id="content-ed-f1">
 		</div>
 	</div>
 	<script type="text/javascript">
-		
-		var thisContentEditableDiv = $('#content-ed-f1')
 
-		function checkForEachButtonToBeActive() {
-			
-			let thisContentEditableId = thisContentEditableDiv.attr('contenteditable-family')
-			let thisOptionSet = $('.inputBoxOptionSet[contenteditable-family="' + thisContentEditableId + '"]')
-
-			let boldButtonJsRef = thisOptionSet.find('[child-function="bold"]');
-
-			if(document.queryCommandState("bold"))
-			{
-				setActiveButton(boldButtonJsRef)
-			}
-			else
-			{
-				setInactiveButton(boldButtonJsRef)
-			}
-		}
-
-		document.onselectionchange = function() {
-    		checkForEachButtonToBeActive()
-		};
-
-		var selectedTextObjectSet = {}
-		$('.inputBoxOptionSet').on('click', '.inputBoxOption-child', function(event) {
-			event.preventDefault();
-			let buttonChildRef = event.currentTarget;
-			checkAndSetActive(buttonChildRef, event);
-			let buttonChildJsRef = $(event.currentTarget)
-			// let eventName = "content.edit." + buttonChildJsRef.attr('child-function')
-			// $('.inputBox[contenteditable-family="' + buttonChildJsRef.closest('.inputBoxOptionSet').attr('contenteditable-family') + '"]').focus()
-			// buttonChildJsRef.closest('.inputBoxOptionSet').trigger()
+		$(function(){
+			var editor = new smartInputBox('#contentEditParent', '#content-ed-f1', '#content-ed-f1-toolbar');
 		});
 
-		function checkAndSetActive(currentButton, event, isUsingJs=false)
-		{
-			thisContentEditableDiv.focus();
+		var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId) {
+			
+			var thisParentContainerDiv = $(parentContainerId)
+			var thisContentEditableDiv = $(editorDivId)
+			var thisToolbarDiv = $(toolbarDivId)
+			// (enableObjectResizing) call command in beginning
 
-			let clickedOptionButtonJsref = $(currentButton);
-			// activate/deactivate all its functionalities
-			doActionRelatedActionOfButton(clickedOptionButtonJsref)
+			thisContentEditableDiv.attr('contenteditable', 'true');
 
-			if(clickedOptionButtonJsref.hasClass('active') && (isUsingJs || $(event.target).closest('.no-active-trigger').length == 0)) 
-			{
-				setInactiveButton(clickedOptionButtonJsref)
-			}
-			else
-			{
+			var editorButtons = {
+				'undoaction': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'undo',
+				},
+				'redoaction': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'redo',
+				},
+				'printaction': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'commandName': '',
+				},
+				'fontStyle': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'commandName': 'fontName',
+				},
+				'fontSize': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'commandName': 'fontSize',
+				},
+				'italic': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'italic',
+				},
+				'bold': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'bold',
+				},
+				'underline': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'underline',
+				},
+				'highlight': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'parameter': '#fcf8e3',
+					'commandName': 'hiliteColor',
+				},
+				'addLink': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'commandName': 'createLink',
+				},
+				'addImage': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'commandName': 'insertImage',
+				},
+				'alignLeft': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyLeft',
+				},
+				'alignCenter': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyCenter',
+				},
+				'alignRight': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyRight',
+				},
+				'alignJustify': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyFull',
+				},
+				'textHeight': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'commandName': 'lineHeight',
+				},
+				'orderedListMaker': {
+					'isCommand': true,
+					'toBeChecked': false,
+					'commandName': 'insertOrderedList',
+				},
+				'unorderedListMaker': {
+					'isCommand': true,
+					'toBeChecked': false,
+					'commandName': 'insertUnorderedList',
+				},
+				'indent': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'indent',
+				},
+				'outdent': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'outdent',
+				},
+				'addPoll': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'commandName': 'outdent',
+				},
+				'removeFormatting': {
+					'isCommand': true,
+					'toBeChecked': false,
+					'commandName': 'removeFormat',
+				},
+			};
 
-				// activate the button
+			function checkForEachButtonToBeActive() {
 
-				setActiveButton(clickedOptionButtonJsref)
-			}
-		}
-
-		function setInactiveButton(clickedOptionButton) {
-			let clickedOptionButtonJsref = $(clickedOptionButton)
-			clickedOptionButtonJsref.removeClass('active')
-		}
-
-		function setActiveButton(clickedOptionButton) {
-			let clickedOptionButtonJsref = $(clickedOptionButton)
-			clickedOptionButtonJsref.addClass('active')
-			if(clickedOptionButtonJsref.hasClass('active-no-stay'))
-			{
-				console.log("active-no-stay")
-				$(document).on('click', function closeOnOutOfFocus(ev){
-					if($(ev.target).closest(clickedOptionButtonJsref).length == 0)
+				// let boldButtonJsRef = thisOptionSet.find('[child-function="bold"]');
+				for(let propertyFunction in editorButtons) {
+					if(editorButtons[propertyFunction]['isCommand'] && editorButtons[propertyFunction]['toBeChecked'])
 					{
-						setInactiveButton(clickedOptionButtonJsref);
-						$(document).off('click', closeOnOutOfFocus)
+						// console.log(propertyFunction, editorButtons[propertyFunction]['commandName'], thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+						if(document.queryCommandState(editorButtons[propertyFunction]['commandName']))
+						{
+							console.log(propertyFunction)	
+							setActiveButton(thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+						}
+						else
+						{
+							setInactiveButton(thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+						}
 					}
-				})
+
+				}
+
 			}
-		}
 
-		function doActionRelatedActionOfButton(clickedOptionButtonJsref)
-		{
-			let actionProp = clickedOptionButtonJsref.attr('child-function')
+			document.onselectionchange = function(event) {
+				if(thisParentContainerDiv.find(':focus').length > 0)
+					checkForEachButtonToBeActive()
+			};
 
-			if(actionProp == "bold")
-			{
-				document.execCommand("bold", false, null);
+			function checkForKeyPressActionsForDifferentElements(event) {
+				if(event.keyCode == 9)
+				{
+					event.preventDefault();
+					// console.log("sdfs")
+					if(isSelectionInsideElementTag('li'))
+					{
+						if(event.shiftKey)
+							document.execCommand('outdent', false, null);
+						else
+							document.execCommand('indent', false, null);
+					}
+					else
+					{
+						document.execCommand('insertHTML', false, '&emsp;')
+					}
+				}
 			}
-		}
 
-		function uniqueChildButtonFunction(event) {
-			let currentButtonJsRef = $(event.currentTarget);
-			let buttonGroupSet = currentButtonJsRef.siblings('[child-function]');
-			buttonGroupSet.each(function(index, el) {
-				setInactiveButton(el)
+			thisContentEditableDiv.on('keydown', function(event){
+				checkForKeyPressActionsForDifferentElements(event)
+			})
+
+			function isSelectionInsideElementTag(tagName) {
+				var sel, containerNode;
+				tagName = tagName.toUpperCase();
+				if (window.getSelection)
+				{
+					sel = window.getSelection();
+					if (sel.rangeCount > 0)
+					{
+						containerNode = sel.getRangeAt(0).commonAncestorContainer;
+					}
+				}
+				else if ( (sel = document.selection) && sel.type != "Control" )
+				{
+				    containerNode = sel.createRange().parentElement();
+				}
+				while (containerNode)
+				{
+				    if (containerNode.nodeType == 1 && containerNode.tagName == tagName)
+				    {
+				        return true;
+				    }
+				    containerNode = containerNode.parentNode;
+				    if(containerNode && containerNode.getAttribute && containerNode.getAttribute('id') == thisContentEditableDiv.attr('id'))
+				    {
+				    	return false;
+				    }
+				}
+				return false;
+			}
+
+			var selectedTextObjectSet = {}
+			thisToolbarDiv.on('click', '.inputBoxOption-child', function(event) {
+				event.preventDefault();
+				let buttonChildRef = event.currentTarget;
+				checkAndSetActive(buttonChildRef, event);
+				let buttonChildJsRef = $(event.currentTarget)
+				// let eventName = "content.edit." + buttonChildJsRef.attr('child-function')
+				// $('.inputBox[contenteditable-family="' + buttonChildJsRef.closest('.inputBoxOptionSet').attr('contenteditable-family') + '"]').focus()
+				// buttonChildJsRef.closest('.inputBoxOptionSet').trigger()
 			});
 
-		}
+			function checkAndSetActive(currentButton, event, isUsingJs=false)
+			{
+				let clickedOptionButtonJsref = $(currentButton);
+				// activate/deactivate all its functionalities
+				doActionRelatedActionOfButton(clickedOptionButtonJsref)
 
-		$('[child-selection="unique"] [child-function]').on('click', uniqueChildButtonFunction);
+				if(clickedOptionButtonJsref.hasClass('active') && (isUsingJs || $(event.target).closest('.no-active-trigger').length == 0)) 
+					setInactiveButton(clickedOptionButtonJsref)
+				else
+					setActiveButton(clickedOptionButtonJsref)
+			}
+
+			// set the button inactive in the toolbar
+			function setInactiveButton(clickedOptionButton) {
+				let clickedOptionButtonJsref = $(clickedOptionButton)
+				clickedOptionButtonJsref.removeClass('active')
+			}
+
+			// set the button active in the toolbar
+			function setActiveButton(clickedOptionButton) {
+				let clickedOptionButtonJsref = $(clickedOptionButton)
+				clickedOptionButtonJsref.addClass('active')
+				if(clickedOptionButtonJsref.hasClass('active-no-stay'))
+				{
+					console.log("active-no-stay")
+					$(document).on('click', function closeOnOutOfFocus(ev){
+						if($(ev.target).closest(clickedOptionButtonJsref).length == 0)
+						{
+							setInactiveButton(clickedOptionButtonJsref);
+							$(document).off('click', closeOnOutOfFocus)
+						}
+					})
+				}
+			}
+
+			function doActionRelatedActionOfButton(clickedOptionButtonJsref)
+			{
+
+				let actionProp = clickedOptionButtonJsref.attr('child-function')
+				if(editorButtons[actionProp]['isCommand'] && editorButtons[actionProp]['parameter'] != true)
+				{
+					thisContentEditableDiv.focus();
+					console.log(actionProp, editorButtons[actionProp])
+					document.execCommand(editorButtons[actionProp]['commandName'], false, editorButtons[actionProp]['parameter']);
+				}
+				// with parameter default command
+				else if(editorButtons[actionProp]['isCommand'])
+				{
+					let parameter = "";
+					document.execCommand(editorButtons[actionProp]['commandName'], false, parameter);
+				}
+			}
+
+			function uniqueChildButtonFunction(event) {
+				let currentButtonJsRef = $(event.currentTarget);
+				let buttonGroupSet = currentButtonJsRef.siblings('[child-function]');
+				buttonGroupSet.each(function(index, el) {
+					setInactiveButton(el)
+				});
+
+			}
+
+			$('[child-selection="unique"] [child-function]').on('click', uniqueChildButtonFunction);
+
+		}
+		
 
 		/*function gatherAndStoreTextObjectForTheContentEditable(event) {
 
