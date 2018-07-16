@@ -14,9 +14,6 @@
 
 	<title></title>
 	<style type="text/css">
-		* {
-			font-family: inherit;
-		}
 		body {
 			padding: 20px 2px;
 			margin: 0;
@@ -164,9 +161,10 @@
 						<i class="fa fa-caret-down"></i>
 					</span> -->
 					<span class="inputBoxOption-child-view withInput">
-						<select class="inputBoxOption-input no-active-trigger" type="text" name="" value="Serif">
-							<option value="Serif">Serif</option>
-							<option value="Sans-Serif">Sans-Serif</option>
+						<select class="inputBoxOption-input no-active-trigger form-control" type="text" name="getValue" value="Serif">
+							<option value="serif" style="font-family: serif;">Serif</option>
+							<option value="sans-serif" style="font-family: sans-serif;">Sans-Serif</option>
+							<option value="monospace" style="font-family: monospace;">Monospace</option>
 						</select>
 						<!-- <input type="text" class="inputBoxOption-input no-active-trigger" name="" value="Serif" placeholder=""> -->
 					</span>
@@ -178,15 +176,14 @@
 						<i class="fa fa-caret-down"></i>
 					</span> -->
 					<span class="inputBoxOption-child-view withInput">
-						<select class="inputBoxOption-input no-active-trigger" name="" value="14" type="number">
-							<option value="10">10</option>
-							<option value="12">12</option>
-							<option value="14">14</option>
-							<option value="16">16</option>
-							<option value="20">20</option>
-							<option value="24">24</option>
-							<option value="28">28</option>
-							<option value="32">32</option>
+						<select class="inputBoxOption-input no-active-trigger form-control" name="getValue" value="14" type="number">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
 						</select>
 						<!-- <input type="number" class="inputBoxOption-input no-active-trigger" name="" value="12" placeholder=""> -->
 					</span>
@@ -443,7 +440,7 @@
 									</div>
 								<form class="m-2">
 									<div class="form-group mb-3">
-										<input type="file" class="form-control" id="imageUploadFile" name="image-file-upload" required>
+										<input type="file" class="form-control" id="imageUploadFile" name="image-file-upload" accept="image/*" required>
 										<div class="invalid-feedback">Please provide a valid file</div>
 									</div>
 									<div class="center-content-flex">	
@@ -469,7 +466,7 @@
 									</div>
 								<form class="m-2">
 									<div class="form-group mb-3">
-										<input type="file" class="form-control" id="videoUploadFile" name="video-file-upload" required>
+										<input type="file" class="form-control" id="videoUploadFile" name="video-file-upload" accept="video/*" required>
 										<div class="invalid-feedback">Please provide a valid file</div>
 									</div>
 									<div class="center-content-flex">	
@@ -510,24 +507,29 @@
 			var editor = new smartInputBox('#contentEditParent', '#content-ed-f1', '#content-ed-f1-toolbar', '#popUpInput');
 		});
 
+		// this is the code for input box
+		// it is a class based code
+		// initialize it with constructor values and voila!
 		var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, inputTakerPopUpId) {
+
+			var _this_main = this;
 			
-			let thisParentContainerDiv = $(parentContainerId)
-			let thisContentEditableDiv = $(editorDivId)
-			let thisToolbarDiv = $(toolbarDivId)
-			let thisInputTakerPopUpDiv = $(inputTakerPopUpId)
-			let thisInputTakerTabs = new Object()
-			let pollOptionsTemplate = new Object()
+			_this_main.thisParentContainerDiv = $(parentContainerId)
+			_this_main.thisContentEditableDiv = $(editorDivId)
+			_this_main.thisToolbarDiv = $(toolbarDivId)
+			_this_main.thisInputTakerPopUpDiv = $(inputTakerPopUpId)
+			_this_main.thisInputTakerTabs = new Object()
+			_this_main.pollOptionsTemplate = new Object()
 
 			// (enableObjectResizing) call command in beginning
 
 			// put necessary properties in the basic references
-			thisParentContainerDiv.css('position', 'relative');
-			thisContentEditableDiv.attr('contenteditable', 'true');
-			thisContentEditableDiv.addClass('inputBox')
+			_this_main.thisParentContainerDiv.css('position', 'relative');
+			_this_main.thisContentEditableDiv.attr('contenteditable', 'true');
+			_this_main.thisContentEditableDiv.addClass('inputBox')
 
 
-			var editorButtons = {
+			_this_main.editorButtons = {
 				'undoaction': {
 					'isCommand': true,
 					'toBeChecked': true,
@@ -547,12 +549,14 @@
 					'isCommand': true,
 					'toBeChecked': false,
 					'parameter': true,
+					'toBeChecked': true,
 					'commandName': 'fontName',
 				},
 				'fontSize': {					// parameter
 					'isCommand': true,
 					'toBeChecked': false,
 					'parameter': true,
+					'toBeChecked': true,
 					'commandName': 'fontSize',
 				},
 				'italic': {
@@ -655,31 +659,38 @@
 			};
 
 			// set the tabs div reference
-			for(let editorKey in editorButtons) {
+			for(let editorKey in _this_main.editorButtons) {
 
-				if(editorButtons[editorKey]['upload'])
+				if(_this_main.editorButtons[editorKey]['upload'])
 				{
-					console.log(thisInputTakerPopUpDiv.find('.nav-item[name="' + editorKey + '"]'))
-					thisInputTakerTabs[editorKey] = thisInputTakerPopUpDiv.find('.nav-item[name="' + editorKey + '"]')
+					console.log(_this_main.thisInputTakerPopUpDiv.find('.nav-item[name="' + editorKey + '"]'))
+					_this_main.thisInputTakerTabs[editorKey] = _this_main.thisInputTakerPopUpDiv.find('.nav-item[name="' + editorKey + '"]')
 				}
 			
 			}
 
-			function checkForEachButtonToBeActive() {
+			_this_main.checkForEachButtonToBeActiveAndSetValues = function() {
 
 				// let boldButtonJsRef = thisOptionSet.find('[child-function="bold"]');
-				for(let propertyFunction in editorButtons) {
-					if(editorButtons[propertyFunction]['isCommand'] && editorButtons[propertyFunction]['toBeChecked'])
+				for(let propertyFunction in _this_main.editorButtons) {
+					if(_this_main.editorButtons[propertyFunction]['isCommand'] && _this_main.editorButtons[propertyFunction]['toBeChecked'])
 					{
-						// console.log(propertyFunction, editorButtons[propertyFunction]['commandName'], thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
-						if(document.queryCommandState(editorButtons[propertyFunction]['commandName']))
+						// console.log(propertyFunction, _this_main.editorButtons[propertyFunction]['commandName'], _this_main.thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+						if(document.queryCommandState(_this_main.editorButtons[propertyFunction]['commandName']))
 						{
-							console.log(propertyFunction)	
-							setActiveButton(thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+							// console.log(propertyFunction)	
+							_this_main.setActiveButton(_this_main.thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
 						}
 						else
 						{
-							setInactiveButton(thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+							_this_main.setInactiveButton(_this_main.thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
+						}
+
+						if(document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName']))
+						{
+							// console.log(_this_main.editorButtons[propertyFunction]['commandName'], document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName']))
+							let valueSet = document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName'])
+							_this_main.thisToolbarDiv.find('[child-function="' + propertyFunction + '"]').find('[name="getValue"]').val(valueSet)
 						}
 					}
 
@@ -687,17 +698,23 @@
 
 			}
 
+			_this_main.setOptionValuesForEachButton = function() {
+
+			}
+
 			document.onselectionchange = function(event) {
-				if(thisParentContainerDiv.find(':focus').length > 0)
-					checkForEachButtonToBeActive()
+				if(_this_main.thisParentContainerDiv.find(':focus').length > 0)
+				{
+					_this_main.checkForEachButtonToBeActiveAndSetValues()
+				}
 			};
 
-			function checkForKeyPressActionsForDifferentElements(event) {
+			_this_main.checkForKeyPressActionsForDifferentElements = function(event) {
 				if(event.keyCode == 9)
 				{
 					event.preventDefault();
 					// console.log("sdfs")
-					if(isSelectionInsideElementTag('li'))
+					if(_this_main.isSelectionInsideElementTag('li'))
 					{
 						if(event.shiftKey)
 							document.execCommand('outdent', false, null);
@@ -711,11 +728,11 @@
 				}
 			}
 
-			thisContentEditableDiv.on('keydown', function(event){
-				checkForKeyPressActionsForDifferentElements(event)
+			_this_main.thisContentEditableDiv.on('keydown', function(event){
+				_this_main.checkForKeyPressActionsForDifferentElements(event)
 			})
 
-			function isSelectionInsideElementTag(tagName) {
+			_this_main.isSelectionInsideElementTag = function(tagName) {
 				var sel, containerNode;
 				tagName = tagName.toUpperCase();
 				if (window.getSelection)
@@ -737,7 +754,7 @@
 				        return true;
 				    }
 				    containerNode = containerNode.parentNode;
-				    if(containerNode && containerNode.getAttribute && containerNode.getAttribute('id') == thisContentEditableDiv.attr('id'))
+				    if(containerNode && containerNode.getAttribute && containerNode.getAttribute('id') == _this_main.thisContentEditableDiv.attr('id'))
 				    {
 				    	return false;
 				    }
@@ -745,37 +762,36 @@
 				return false;
 			}
 
-			var selectedTextObjectSet = {}
-			thisToolbarDiv.on('click', '.inputBoxOption-child', function(event) {
+			_this_main.thisToolbarDiv.on('click', '.inputBoxOption-child', function(event) {
 				event.preventDefault();
 				let buttonChildRef = event.currentTarget;
-				checkAndSetActive(buttonChildRef, event);
+				_this_main.checkAndSetActive(buttonChildRef, event);
 				let buttonChildJsRef = $(event.currentTarget)
 				// let eventName = "content.edit." + buttonChildJsRef.attr('child-function')
 				// $('.inputBox[contenteditable-family="' + buttonChildJsRef.closest('.inputBoxOptionSet').attr('contenteditable-family') + '"]').focus()
 				// buttonChildJsRef.closest('.inputBoxOptionSet').trigger()
 			});
 
-			function checkAndSetActive(currentButton, event, isUsingJs=false)
+			_this_main.checkAndSetActive = function(currentButton, event, isUsingJs=false)
 			{
 				let clickedOptionButtonJsref = $(currentButton);
 				// activate/deactivate all its functionalities
-				doActionOfReferencedButton(clickedOptionButtonJsref)
+				_this_main.doActionOfReferencedButton(clickedOptionButtonJsref)
 
 				if(clickedOptionButtonJsref.hasClass('active') && (isUsingJs || $(event.target).closest('.no-active-trigger').length == 0)) 
-					setInactiveButton(clickedOptionButtonJsref)
+					_this_main.setInactiveButton(clickedOptionButtonJsref)
 				else
-					setActiveButton(clickedOptionButtonJsref)
+					_this_main.setActiveButton(clickedOptionButtonJsref)
 			}
 
 			// set the button inactive in the toolbar
-			function setInactiveButton(clickedOptionButton) {
+			_this_main.setInactiveButton = function(clickedOptionButton) {
 				let clickedOptionButtonJsref = $(clickedOptionButton)
 				clickedOptionButtonJsref.removeClass('active')
 			}
 
 			// set the button active in the toolbar
-			function setActiveButton(clickedOptionButton) {
+			_this_main.setActiveButton = function(clickedOptionButton) {
 				let clickedOptionButtonJsref = $(clickedOptionButton)
 				clickedOptionButtonJsref.addClass('active')
 				if(clickedOptionButtonJsref.hasClass('active-no-stay'))
@@ -784,117 +800,138 @@
 					$(document).on('click', function closeOnOutOfFocus(ev){
 						if($(ev.target).closest(clickedOptionButtonJsref).length == 0)
 						{
-							setInactiveButton(clickedOptionButtonJsref);
+							_this_main.setInactiveButton(clickedOptionButtonJsref);
 							$(document).off('click', closeOnOutOfFocus)
 						}
 					})
 				}
 			}
 
-			function doActionOfReferencedButton(clickedOptionButtonJsref)
-			{
+			_this_main.doActionOfReferencedButton = function(clickedOptionButtonJsref) {
 
 				let actionProp = clickedOptionButtonJsref.attr('child-function')
-				if(editorButtons[actionProp]['isCommand'] && editorButtons[actionProp]['parameter'] != true)
+				if(_this_main.editorButtons[actionProp]['isCommand'] && _this_main.editorButtons[actionProp]['parameter'] != true)
 				{
-					thisContentEditableDiv.focus();
-					console.log(actionProp, editorButtons[actionProp])
-					document.execCommand(editorButtons[actionProp]['commandName'], false, editorButtons[actionProp]['parameter']);
+					_this_main.thisContentEditableDiv.focus();
+					console.log(actionProp, _this_main.editorButtons[actionProp])
+					document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, _this_main.editorButtons[actionProp]['parameter']);
 				}
 				// with parameter default command
-				else if(editorButtons[actionProp]['isCommand'])
+				else if(_this_main.editorButtons[actionProp]['isCommand'])
 				{
-					let parameter = "";
-					activateInputTaker(actionProp)
-					document.execCommand(editorButtons[actionProp]['commandName'], false, parameter);
+					if(_this_main.editorButtons[actionProp]['upload'])
+					{
+						let parameter = "";
+						_this_main.activateInputTaker(actionProp)
+						document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);
+					}
+					else
+					{
+						_this_main.thisContentEditableDiv.focus();
+						let parameter = clickedOptionButtonJsref.find('[name="getValue"]').val();
+						console.log(_this_main.editorButtons[actionProp]['commandName'], parameter)
+						document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);	
+					}
 				}
 				else {
 					let parameter = "";
-					activateInputTaker(actionProp)
+					_this_main.activateInputTaker(actionProp)
 				}
 			}
 
-			function activateInputTaker(actionProp) {
-				if(editorButtons[actionProp]['upload']) {
-					thisInputTakerPopUpDiv.find('.modal-loader').removeClass('activate')
-					console.log(thisInputTakerTabs[actionProp])
-					thisInputTakerTabs[actionProp].tab('show')
-					thisInputTakerPopUpDiv.modal('show');
+			_this_main.activateInputTaker = function(actionProp) {
+				if(_this_main.editorButtons[actionProp]['upload']) {
+					_this_main.thisInputTakerPopUpDiv.find('.modal-loader').removeClass('activate')
+					console.log(_this_main.thisInputTakerTabs[actionProp])
+					_this_main.thisInputTakerTabs[actionProp].tab('show')
+					_this_main.thisInputTakerPopUpDiv.modal('show');
 				}
 				else {
 
 				}
 			}
 
-			function deactiveInputtaker() {
-				thisInputTakerPopUpDiv.modal('hide');
+			_this_main.deactiveInputtaker = function() {
+				_this_main.thisInputTakerPopUpDiv.modal('hide');
 			}
 
-			function uniqueChildButtonFunction(event) {
+			_this_main.uniqueChildButtonFunction = function(event) {
 				let currentButtonJsRef = $(event.currentTarget);
 				let buttonGroupSet = currentButtonJsRef.siblings('[child-function]');
 				buttonGroupSet.each(function(index, el) {
-					setInactiveButton(el)
+					_this_main.setInactiveButton(el)
 				});
 
 			}
-			thisToolbarDiv.on('click', '[child-selection="unique"] [child-function]', uniqueChildButtonFunction);
+			_this_main.thisToolbarDiv.on('click', '[child-selection="unique"] [child-function]', _this_main.uniqueChildButtonFunction);
 
 			$('[bb-add-remove-tag]').each(function(index, el) {
 				let elName = $(el).attr('name')
-				pollOptionsTemplate[elName] = new addTagTemplate('[name="' + elName + '"]', 1)
+				_this_main.pollOptionsTemplate[elName] = new addTagTemplate('[name="' + elName + '"]', 1)
 			});
 
-			console.log(pollOptionsTemplate)
+			console.log(_this_main.pollOptionsTemplate)
 
-			thisInputTakerPopUpDiv.on('click', '[name="addAnotherField"]', function (event) {
+			_this_main.thisInputTakerPopUpDiv.on('click', '[name="addAnotherField"]', function (event) {
 				let addToDiv = $(event.target).siblings('[bb-add-remove-tag]')
 				let addToDivName = addToDiv.attr('name')
-				if(pollOptionsTemplate[addToDivName]) {
-					pollOptionsTemplate[addToDivName].addTemplateToTag()
+				if(_this_main.pollOptionsTemplate[addToDivName]) {
+					_this_main.pollOptionsTemplate[addToDivName].addTemplateToTag()
 				}
 				else {
 					console.log('404 error: please refresh the page.')
 				}
 			})
-			thisInputTakerPopUpDiv.on('click', '[name="removeLastField"]', function (event) {
+			_this_main.thisInputTakerPopUpDiv.on('click', '[name="removeLastField"]', function (event) {
 				let removeFromDiv = $(event.target).siblings('[bb-add-remove-tag]')
 				let removeFromDivName = removeFromDiv.attr('name')
-				if(pollOptionsTemplate[addToDivName]) {
-					pollOptionsTemplate[addToDivName].addTemplateToTag()
+				if(_this_main.pollOptionsTemplate[addToDivName]) {
+					_this_main.pollOptionsTemplate[addToDivName].addTemplateToTag()
 				}
 				else {
 					console.log('404 error: please refresh the page.')
 				}
 			})
 
-			thisInputTakerPopUpDiv.on('click', 'button[name="pollOptionsAdd"]', function(event) {
+			_this_main.thisInputTakerPopUpDiv.on('click', 'button[name="pollOptionsAdd"]', function(event) {
 				
 			})
+
+			_this_main.getSelectionObject = function() {
+				let textObject = new Object();
+			    if (window.getSelection) {
+			        textObject = window.getSelection();
+			    } else if (document.selection && document.selection.createRange ) {
+					textObject = document.selection.createRange();
+			    }
+			    return textObject;
+			}
 
 			// defining all classes
 			function addTagTemplate(templateParentRef, initializeCount=0) {
-				var thisTemplateParentRef = $(templateParentRef)
-				var counter = 0;
+
+				var _this_sub = this;
+				_this_sub.thisTemplateParentRef = $(templateParentRef)
+				_this_sub.counter = 0;
 				
-				var getTemplatePreparedTemplate = function() {
-					counter += 1
+				_this_sub.getTemplatePreparedTemplate = function() {
+					_this_sub.counter += 1
 					return ' \
-					<div class="input-group mb-3" bb-template-counter="' + counter + '"> \
+					<div class="input-group mb-3" bb-template-counter="' + _this_sub.counter + '"> \
 						<div class="input-group-append"> \
-							<span class="input-group-text">' + counter + '</span> \
+							<span class="input-group-text">' + _this_sub.counter + '</span> \
 						</div> \
 						<input type="text" class="form-control" placeholder="Poll Detail" aria-label="Poll Detail"> \
 					</div> \
 					';
 				}
 
-				var addTemplateToTag = function() {
-					thisTemplateParentRef.append(getTemplatePreparedTemplate())
+				_this_sub.addTemplateToTag = function() {
+					_this_sub.thisTemplateParentRef.append(_this_sub.getTemplatePreparedTemplate())
 				}
 
-				for(; counter<initializeCount;counter++) {
-					addTemplateToTag()
+				for(; _this_sub.counter<initializeCount;_this_sub.counter++) {
+					_this_sub.addTemplateToTag()
 				}
 			}
 
