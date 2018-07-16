@@ -176,10 +176,10 @@
 						<i class="fa fa-caret-down"></i>
 					</span> -->
 					<span class="inputBoxOption-child-view withInput">
-						<select class="inputBoxOption-input no-active-trigger form-control" name="getValue" value="14" type="number">
+						<select class="inputBoxOption-input no-active-trigger form-control" name="getValue" type="number">
 							<option value="1">1</option>
 							<option value="2">2</option>
-							<option value="3">3</option>
+							<option value="3" selected>3 (default)</option>
 							<option value="4">4</option>
 							<option value="5">5</option>
 							<option value="6">6</option>
@@ -208,6 +208,16 @@
 				<button class="inputBoxOption-child" child-function="highlight">
 					<span class="inputBoxOption-child-view">
 						<i class="fa fa-highlighter"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="subscript">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-subscript"></i>
+					</span>
+				</button>
+				<button class="inputBoxOption-child" child-function="superscript">
+					<span class="inputBoxOption-child-view">
+						<i class="fa fa-superscript"></i>
 					</span>
 				</button>
 			</div>
@@ -511,6 +521,8 @@
 		// it is a class based code
 		// initialize it with constructor values and voila!
 		var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, inputTakerPopUpId) {
+
+			document.execCommand('styleWithCSS', null, true)
 
 			var _this_main = this;
 			
@@ -857,6 +869,16 @@
 					'parameter': '#fcf8e3',
 					'commandName': 'hiliteColor',
 				},
+				'subscript': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'subscript',
+				},
+				'superscript': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'superscript',
+				},
 				'addLink': {					// parameter
 					'isCommand': true,
 					'toBeChecked': false,
@@ -934,7 +956,7 @@
 					'commandName': 'removeFormat',
 				},
 			};
-		
+
 
 		}
 		
