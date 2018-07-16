@@ -686,7 +686,7 @@
 							_this_main.setInactiveButton(_this_main.thisToolbarDiv.find('[child-function="' + propertyFunction + '"]'))
 						}
 
-						if(document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName']))
+						if(_this_main.editorButtons[propertyFunction]['parameter'] && document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName']))
 						{
 							// console.log(_this_main.editorButtons[propertyFunction]['commandName'], document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName']))
 							let valueSet = document.queryCommandValue(_this_main.editorButtons[propertyFunction]['commandName'])
