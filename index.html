@@ -709,10 +709,12 @@
 					}
 					else
 					{
-						_this_main.thisContentEditableDiv.focus();
-						let parameter = clickedOptionButtonJsref.find('[name="getValue"]').val();
-						console.log(_this_main.editorButtons[actionProp]['commandName'], parameter)
-						document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);	
+						clickedOptionButtonJsref.find('[name="getValue"]').on('change', function(event) {
+							let parameter = $(event.target).val();
+							console.log(_this_main.editorButtons[actionProp]['commandName'], parameter)
+							_this_main.thisContentEditableDiv.focus();
+							document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);
+						})
 					}
 				}
 				else {
