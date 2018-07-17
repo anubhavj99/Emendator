@@ -525,6 +525,146 @@
 			document.execCommand('styleWithCSS', null, true)
 
 			var _this_main = this;
+
+			// editor tabs
+			_this_main.editorButtons = {
+				'undoaction': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'undo',
+				},
+				'redoaction': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'redo',
+				},
+				'printaction': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'commandName': '',
+				},
+				'fontStyle': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'toBeChecked': true,
+					'commandName': 'fontName',
+				},
+				'fontSize': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'toBeChecked': true,
+					'commandName': 'fontSize',
+				},
+				'italic': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'italic',
+				},
+				'bold': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'bold',
+				},
+				'underline': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'underline',
+				},
+				'highlight': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'parameter': '#fcf8e3',
+					'commandName': 'hiliteColor',
+				},
+				'subscript': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'subscript',
+				},
+				'superscript': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'superscript',
+				},
+				'addLink': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'upload': true,
+					'commandName': 'createLink',
+				},
+				'addImage': {					// parameter
+					'isCommand': true,
+					'toBeChecked': false,
+					'parameter': true,
+					'upload': true,
+					'commandName': 'insertImage',
+				},
+				'addVideo': {					// parameter
+					'isCommand': false,
+					'toBeChecked': false,
+					'parameter': true,
+					'upload': true,
+				},
+				'alignLeft': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyLeft',
+				},
+				'alignCenter': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyCenter',
+				},
+				'alignRight': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyRight',
+				},
+				'alignJustify': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'justifyFull',
+				},
+				'textHeight': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'commandName': 'lineHeight',
+				},
+				'orderedListMaker': {
+					'isCommand': true,
+					'toBeChecked': false,
+					'commandName': 'insertOrderedList',
+				},
+				'unorderedListMaker': {
+					'isCommand': true,
+					'toBeChecked': false,
+					'commandName': 'insertUnorderedList',
+				},
+				'indent': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'indent',
+				},
+				'outdent': {
+					'isCommand': true,
+					'toBeChecked': true,
+					'commandName': 'outdent',
+				},
+				'addPoll': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'parameter': true,
+					'upload': true,
+				},
+				'removeFormatting': {
+					'isCommand': true,
+					'toBeChecked': false,
+					'commandName': 'removeFormat',
+				},
+			};
 			
 			_this_main.thisParentContainerDiv = $(parentContainerId)
 			_this_main.thisContentEditableDiv = $(editorDivId)
@@ -818,148 +958,6 @@
 					_this_sub.addTemplateToTag()
 				}
 			}
-
-			// editor tabs
-			_this_main.editorButtons = {
-				'undoaction': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'undo',
-				},
-				'redoaction': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'redo',
-				},
-				'printaction': {
-					'isCommand': false,
-					'toBeChecked': false,
-					'commandName': '',
-				},
-				'fontStyle': {					// parameter
-					'isCommand': true,
-					'toBeChecked': false,
-					'parameter': true,
-					'toBeChecked': true,
-					'commandName': 'fontName',
-				},
-				'fontSize': {					// parameter
-					'isCommand': true,
-					'toBeChecked': false,
-					'parameter': true,
-					'toBeChecked': true,
-					'commandName': 'fontSize',
-				},
-				'italic': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'italic',
-				},
-				'bold': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'bold',
-				},
-				'underline': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'underline',
-				},
-				'highlight': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'parameter': '#fcf8e3',
-					'commandName': 'hiliteColor',
-				},
-				'subscript': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'subscript',
-				},
-				'superscript': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'superscript',
-				},
-				'addLink': {					// parameter
-					'isCommand': true,
-					'toBeChecked': false,
-					'parameter': true,
-					'upload': true,
-					'commandName': 'createLink',
-				},
-				'addImage': {					// parameter
-					'isCommand': true,
-					'toBeChecked': false,
-					'parameter': true,
-					'upload': true,
-					'commandName': 'insertImage',
-				},
-				'addVideo': {					// parameter
-					'isCommand': false,
-					'toBeChecked': false,
-					'parameter': true,
-					'upload': true,
-				},
-				'alignLeft': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'justifyLeft',
-				},
-				'alignCenter': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'justifyCenter',
-				},
-				'alignRight': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'justifyRight',
-				},
-				'alignJustify': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'justifyFull',
-				},
-				'textHeight': {
-					'isCommand': false,
-					'toBeChecked': false,
-					'commandName': 'lineHeight',
-				},
-				'orderedListMaker': {
-					'isCommand': true,
-					'toBeChecked': false,
-					'commandName': 'insertOrderedList',
-				},
-				'unorderedListMaker': {
-					'isCommand': true,
-					'toBeChecked': false,
-					'commandName': 'insertUnorderedList',
-				},
-				'indent': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'indent',
-				},
-				'outdent': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'commandName': 'outdent',
-				},
-				'addPoll': {
-					'isCommand': false,
-					'toBeChecked': false,
-					'parameter': true,
-					'upload': true,
-				},
-				'removeFormatting': {
-					'isCommand': true,
-					'toBeChecked': false,
-					'commandName': 'removeFormat',
-				},
-			};
-
-
 		}
 		
 
