@@ -486,7 +486,7 @@
 							</div>
 							<div class="tab-pane fade" id="nav-add-poll" role="tabpanel">
 								<div class="p-3">
-									<div name="addInputPolls" class="mb-2" bb-add-remove-tag>
+									<div name="addInputPolls" id="getPollInputField" class="mb-2" bb-add-remove-tag>
 										<!-- <div class="input-group mb-3">
 											<div class="input-group-append">
 												<span class="input-group-text">1</span>
@@ -498,7 +498,7 @@
 									<button class="btn btn-danger btn-sm btn-square" name="removeLastField">Remove last feild</button>
 								</div>
 								<div class="center-content-flex">	
-									<button class="btn btn-info btn-square" name="pollOptionsAdd" bb-getFrom="[name='addInputPolls']">Add Poll</button>
+									<button class="btn btn-info btn-square" name="pollOptionsAdd" bb-getFrom="#getPollInputField">Add Poll</button>
 								</div>
 							</div>
 						</div>
@@ -896,19 +896,15 @@
 
 			console.log(_this_main.pollOptionsTemplate)
 
+			$('[bb-add-remove-tag]').each(function(index, el) {
+				let elName = $(el).attr('name')
+				_this_main.pollOptionsTemplate[elName] = new addTagTemplate('[name="' + elName + '"]', 1)
+			});
+
 			_this_main.thisInputTakerPopUpDiv.on('click', '[name="addAnotherField"]', function (event) {
 				let addToDiv = $(event.target).siblings('[bb-add-remove-tag]')
 				let addToDivName = addToDiv.attr('name')
-				if(_this_main.pollOptionsTemplate[addToDivName]) {
-					_this_main.pollOptionsTemplate[addToDivName].addTemplateToTag()
-				}
-				else {
-					console.log('404 error: please refresh the page.')
-				}
-			})
-			_this_main.thisInputTakerPopUpDiv.on('click', '[name="removeLastField"]', function (event) {
-				let removeFromDiv = $(event.target).siblings('[bb-add-remove-tag]')
-				let removeFromDivName = removeFromDiv.attr('name')
+				console.log(_this_main.pollOptionsTemplate[addToDivName])
 				if(_this_main.pollOptionsTemplate[addToDivName]) {
 					_this_main.pollOptionsTemplate[addToDivName].addTemplateToTag()
 				}
@@ -917,9 +913,33 @@
 				}
 			})
 
-			_this_main.thisInputTakerPopUpDiv.on('click', 'button[name="pollOptionsAdd"]', function(event) {
-				
+			_this_main.thisInputTakerPopUpDiv.on('click', '[name="removeLastField"]', function (event) {
+				let removeFromDiv = $(event.target).siblings('[bb-add-remove-tag]')
+				let removeFromDivName = removeFromDiv.attr('name')
+				console.log(_this_main.pollOptionsTemplate[removeFromDivName])
+				if(_this_main.pollOptionsTemplate[removeFromDivName]) {
+					_this_main.pollOptionsTemplate[removeFromDivName].removeLastTemplateFromTag()
+				}
+				else {
+					console.log('404 error: please refresh the page.')
+				}
 			})
+
+			_this_main.thisInputTakerPopUpDiv.on('click', 'button[name="pollOptionsAdd"]', function(event) {
+				let optionValueSet = []
+				let addRemoveTagRef = $($(event.target).attr('bb-getFrom'))
+				addRemoveTagRef.find('input').each(function(index, el) {
+					optionValueSet.push($(el).val())
+				});
+				_this_main.putOptionValuesInPollTemplateAndAppend(optionValueSet, addRemoveTagRef)
+			})
+
+			_this_main.putOptionValuesInPollTemplateAndAppend = function(optionValueSet, addRemoveTagRef) {
+				deactiveInputtaker()
+				pollOptionsTemplate[addRemoveTagRef.attr('name')].resetTemplateTag()
+				console.log(optionValueSet)
+				$('<span/>').html("wer").appendTo(getSelectionObject().getRangeAt(0).startContainer)
+			}
 
 			_this_main.getSelectionObject = function() {
 				let textObject = new Object();
@@ -933,30 +953,40 @@
 
 			// defining all classes
 			function addTagTemplate(templateParentRef, initializeCount=0) {
-
-				var _this_sub = this;
-				_this_sub.thisTemplateParentRef = $(templateParentRef)
-				_this_sub.counter = 0;
+				this.thisTemplateParentRef = $(templateParentRef)
+				this.initializeCounter = initializeCount
+				this.counter = 0;
 				
-				_this_sub.getTemplatePreparedTemplate = function() {
-					_this_sub.counter += 1
+				this.getTemplatePreparedTemplate = function() {
+					this.counter += 1
 					return ' \
-					<div class="input-group mb-3" bb-template-counter="' + _this_sub.counter + '"> \
+					<div class="input-group mb-3" bb-template-counter="' + this.counter + '"> \
 						<div class="input-group-append"> \
-							<span class="input-group-text">' + _this_sub.counter + '</span> \
+							<span class="input-group-text">' + this.counter + '</span> \
 						</div> \
 						<input type="text" class="form-control" placeholder="Poll Detail" aria-label="Poll Detail"> \
 					</div> \
 					';
 				}
 
-				_this_sub.addTemplateToTag = function() {
-					_this_sub.thisTemplateParentRef.append(_this_sub.getTemplatePreparedTemplate())
+				this.addTemplateToTag = function() {
+					this.thisTemplateParentRef.append(this.getTemplatePreparedTemplate())
 				}
 
-				for(; _this_sub.counter<initializeCount;_this_sub.counter++) {
-					_this_sub.addTemplateToTag()
+				this.removeLastTemplateFromTag = function() {
+					this.thisTemplateParentRef.find('[bb-template-counter="' + this.counter + '"]').remove()
+					this.counter -= 1
 				}
+
+				this.resetTemplateTag = function() {
+					this.thisTemplateParentRef.html('')
+					for(; this.counter<this.initializeCounter;) {
+						this.addTemplateToTag()
+					}					
+				}
+
+				// reset the tab for initialization
+				this.resetTemplateTag()
 			}
 		}
 		
