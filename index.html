@@ -534,9 +534,22 @@
 		$(function(){
 			var editor = new smartInputBox('#contentEditParent', '#content-ed-f1', '#content-ed-f1-toolbar', '#popUpInput');
 			$('[name="clickconsole"]').on('click', function() {
-				console.log(editor.getCompressedData())
+				let xcode = editor.getCompressedData()
+				console.log(xcode)
+				console.log(smartInputBoxDecoder(JSON.parse(xcode)))
 			})
 		});
+
+		// the decoder for the storage json object to be converted html object
+		var smartInputBoxDecoder = function(contentData) {
+			
+			contentData.forEach(function(el) {
+				if(el.type == 'defined') {
+					
+				}
+			});
+
+		}
 
 		// this is the code for input box
 		// it is a class based code
@@ -1241,6 +1254,7 @@
 			}
 
 			// get the compressed data for storage of the input taker
+			// IMP: NO parameter is needed for this. The above parameter has been used for recursion!
 			_this_main.getCompressedData = function(containerDiv=null) {
 				let htmlContainerArray = []
 
@@ -1306,21 +1320,18 @@
 
 				let containerContents = containerDiv.contents()
 				containerContents.each(function(index, el) {
-					
+
 					if(el.nodeType == 1 || el.nodeType == 3)
 					{
 						let returnedElForNode = _this_main.getCompressedData(el)
-						console.log(el, returnedElForNode)
 						htmlContainerArray = htmlContainerArray.concat(returnedElForNode)
 					}
 
 				});
-				console.log(htmlContainerArray)
 				elObj['children'] = htmlContainerArray
 
 				return [elObj];
 			}
-
 
 		}
 		
