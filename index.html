@@ -316,6 +316,7 @@
 				cursor: text;
 				outline: none;
 				caret-color: grey;
+				min-height: 100px;
 			}
 			.inputBox:hover,
 			.inputBox:focus {
@@ -329,6 +330,12 @@
 			}
 			ol ol ol {
 				list-style-type: lower-latin;
+			}
+			.editorPollDiv {
+				padding: 20px;
+				background: #eee;
+				font-family: monospace !important;
+				font-size: 16px;
 			}
 		</style>
 
@@ -419,13 +426,16 @@
 						</div>
 						<div class="tab-content" id="nav-tabContent">
 							<div class="tab-pane fade show active" id="nav-add-link" role="tabpanel">
-								<form class="m-2">
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-link"></i></span>
+								<form class="m-2" name="addLink-form">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="fa fa-link"></i></span>
+											</div>
+											<label class="sr-only">Please enter a link</label>
+											<input type="text" class="form-control" name="getLinkInput" placeholder="Enter link" spellcheck="false" required>
 										</div>
-										<label class="sr-only">Please enter a link</label>
-										<input type="text" class="form-control" placeholder="Enter link" spellcheck="false" required>
+										<small class="form-text text-muted">Pro Tip: Avoid putting <b>https://</b> or <b>http://</b> in the links.</small>
 									</div>
 									<div class="center-content-flex">
 										<button type="submit" class="btn btn-warning btn-square mb-2">Add Link</button>
@@ -433,22 +443,25 @@
 								</form>
 							</div>
 							<div class="tab-pane fade" id="nav-upload-image" role="tabpanel">
-								<form class="m-2">
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-link"></i></span>
+								<form class="m-2" name="addImage-form">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="fa fa-link"></i></span>
+											</div>
+											<label class="sr-only">Please enter a link</label>
+											<input type="text" class="form-control" name="image-add-link" placeholder="Enter link" spellcheck="false" required>
 										</div>
-										<label class="sr-only">Please enter a link</label>
-										<input type="text" class="form-control" name="image-add-link" placeholder="Enter link" spellcheck="false" required>
+										<small class="form-text text-muted">Only https:// links would work for inserting images</small>
 									</div>
-									<div class="center-content-flex">	
+									<div class="center-content-flex">
 										<button type="submit" class="btn btn-warning btn-square mb-2">Add Link</button>
 									</div>
 								</form>
 									<div class="seperator-text">
 										<span>OR</span>
 									</div>
-								<form class="m-2">
+								<form class="m-2" name="addImage-form">
 									<div class="form-group mb-3">
 										<input type="file" class="form-control" id="imageUploadFile" name="image-file-upload" accept="image/*" required>
 										<div class="invalid-feedback">Please provide a valid file</div>
@@ -459,22 +472,26 @@
 								</form>
 							</div>
 							<div class="tab-pane fade" id="nav-upload-video" role="tabpanel">
-								<form class="m-2">
-									<div class="input-group mb-3">
-										<div class="input-group-prepend">
-											<span class="input-group-text"><i class="fa fa-link"></i></span>
+								<form class="m-2" name="addVideo-form">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text"><i class="fa fa-link"></i></span>
+											</div>
+											<label class="sr-only">Please enter a link</label>
+											<input type="text" class="form-control" name="video-add-link" placeholder="Enter link" spellcheck="false" required>
 										</div>
-										<label class="sr-only">Please enter a link</label>
-										<input type="text" class="form-control" name="video-add-link" placeholder="Enter link" spellcheck="false" required>
+										<small class="form-text text-muted">Only https:// links would work for inserting images</small>
 									</div>
-									<div class="center-content-flex">	
+									<div class="center-content-flex">
 										<button type="submit" class="btn btn-warning btn-square mb-2">Add Link</button>
 									</div>
 								</form>
+
 									<div class="seperator-text">
 										<span>OR</span>
 									</div>
-								<form class="m-2">
+								<form class="m-2" name="addVideo-form">
 									<div class="form-group mb-3">
 										<input type="file" class="form-control" id="videoUploadFile" name="video-file-upload" accept="video/*" required>
 										<div class="invalid-feedback">Please provide a valid file</div>
@@ -511,10 +528,14 @@
 		 	</div>
 		</div>
 	</div>
+	<button name="clickconsole">Click me</button>
 	<script type="text/javascript">
 
 		$(function(){
 			var editor = new smartInputBox('#contentEditParent', '#content-ed-f1', '#content-ed-f1-toolbar', '#popUpInput');
+			$('[name="clickconsole"]').on('click', function() {
+				console.log(editor.getCompressedData())
+			})
 		});
 
 		// this is the code for input box
@@ -672,6 +693,7 @@
 			_this_main.thisInputTakerPopUpDiv = $(inputTakerPopUpId)
 			_this_main.thisInputTakerTabs = new Object()
 			_this_main.pollOptionsTemplate = new Object()
+			_this_main.selectionObjectCreatedUser = new Object()
 
 			// (enableObjectResizing) call command in beginning
 
@@ -679,6 +701,7 @@
 			_this_main.thisParentContainerDiv.css('position', 'relative');
 			_this_main.thisContentEditableDiv.attr('contenteditable', 'true');
 			_this_main.thisContentEditableDiv.addClass('inputBox')
+			_this_main.thisContentEditableDiv.addClass('clearfix')
 
 			// set the tabs div reference
 			for(let editorKey in _this_main.editorButtons) {
@@ -829,6 +852,8 @@
 				}
 			}
 
+			// execute the action of the button clicked in the option bar
+			// the parameters in the editorTab array define how the execution is to be processed for each button
 			_this_main.doActionOfReferencedButton = function(clickedOptionButtonJsref) {
 
 				let actionProp = clickedOptionButtonJsref.attr('child-function')
@@ -844,8 +869,10 @@
 					if(_this_main.editorButtons[actionProp]['upload'])
 					{
 						let parameter = "";
+						_this_main.selectionObjectCreatedUser = _this_main.saveSelectionObject()
+
 						_this_main.activateInputTaker(actionProp)
-						document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);
+						// document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);
 					}
 					else
 					{
@@ -863,10 +890,13 @@
 				}
 			}
 
+			// activate input taker div and activate tab as per request
+			// the tabs are of bootstrap4 and can be activated by .tab('show')
 			_this_main.activateInputTaker = function(actionProp) {
 				if(_this_main.editorButtons[actionProp]['upload']) {
 					_this_main.thisInputTakerPopUpDiv.find('.modal-loader').removeClass('activate')
 					console.log(_this_main.thisInputTakerTabs[actionProp])
+					// activate tab
 					_this_main.thisInputTakerTabs[actionProp].tab('show')
 					_this_main.thisInputTakerPopUpDiv.modal('show');
 				}
@@ -874,11 +904,113 @@
 
 				}
 			}
-
+			// deactivate the input taker popup
 			_this_main.deactiveInputtaker = function() {
 				_this_main.thisInputTakerPopUpDiv.modal('hide');
 			}
 
+			console.log(_this_main.pollOptionsTemplate)
+
+			// capture the forms in the upload popup commands
+
+			// capture the adding of polls options
+			// add the html on the caret position and add 2 breaks before and after it
+			_this_main.thisInputTakerPopUpDiv.on('click', 'button[name="pollOptionsAdd"]', function(event) {
+				let optionValueSet = []
+				let addRemoveTagRef = $($(event.target).attr('bb-getFrom'))
+				addRemoveTagRef.find('input').each(function(index, el) {
+					optionValueSet.push($(el).val())
+				});
+				_this_main.deactiveInputtaker()
+				_this_main.thisContentEditableDiv.focus();
+				_this_main.pollOptionsTemplate[addRemoveTagRef.attr('name')].resetTemplateTag()
+
+				let pollEl = '<br/><br/><div objecttype="poll" objectdata=\'' + JSON.stringify(optionValueSet) + '\' class="editorPollDiv" contenteditable="false"><form>';
+
+				optionValueSet.forEach( function(element, index) {
+					// statements
+					let pollOptionEl = '\
+						<div optionIndex="' + index + '" class="form-check">\
+							<input type="radio" class="form-check-input" name="inputCheckPoll">\
+							<label class="form-check-label">\
+								' + element + '\
+							</label>\
+						</div>\
+					';
+					pollEl += pollOptionEl
+				});
+				pollEl += '</form></div><br/><br/>'
+				// add it to the editable div
+				_this_main.pasteHtmlAtCaret(pollEl, true)
+
+			})
+
+			// capture the form submit for adding hyper link to selection
+			// restore the previously captured selection and execute command on it
+			_this_main.thisParentContainerDiv.on('submit', '[name="addLink-form"]', function(event) {
+				event.preventDefault()
+				_this_main.deactiveInputtaker()
+				_this_main.thisContentEditableDiv.focus();
+				let thisFormInputForLinkJsRef = $(event.target).find('[name="getLinkInput"]')
+				let linkVal = thisFormInputForLinkJsRef.val()
+				_this_main.restoreSelectionObject(_this_main.selectionObjectCreatedUser)
+				document.execCommand('createLink', false, linkVal)
+				/*let anchorEl = $('<a/>').attr('href', linkVal).get(0)
+				_this_main.selectionObjectCreatedUser.getRangeAt(0).surroundContents(anchorEl)*/
+			})
+
+			// capture the submission of the image addition form for the upload popup container
+			// take the image link from the link input or upload the image and generate a link for the same
+			_this_main.thisParentContainerDiv.on('submit', '[name="addImage-form"]', function(event) {
+				event.preventDefault()
+				_this_main.deactiveInputtaker()
+				_this_main.thisContentEditableDiv.focus();
+
+				_this_main.restoreSelectionObject(_this_main.selectionObjectCreatedUser)
+
+				let thisFormInputForLinkJsRef = $(event.target).find('[name="image-add-link"]')
+				let thisFormInputForFileJsRef = $(event.target).find('[name="image-file-upload"]')
+				if(thisFormInputForLinkJsRef.length == 1) {
+					let linkVal = thisFormInputForLinkJsRef.val()
+					let imageHtml = '<br/><div class="my-2 text-center" contenteditable="false" class="img-thumbnail" objecttype="image" objectdata="' + linkVal + '"><img style="width: 90%;max-width: 300px;" src="' + linkVal + '"></div><br/>'
+					console.log(imageHtml)
+					_this_main.pasteHtmlAtCaret(imageHtml, true)
+				}
+				else if(thisFormInputForFileJsRef.length == 1){
+					// add code for upload and put link
+				}
+			})
+
+			// capture the submission of the video addition form for the upload popup container
+			// take the video link from the link input or upload the video and generate a link for the same
+			_this_main.thisParentContainerDiv.on('submit', '[name="addVideo-form"]', function(event) {
+				event.preventDefault()
+				_this_main.deactiveInputtaker()
+				_this_main.thisContentEditableDiv.focus();
+
+				_this_main.restoreSelectionObject(_this_main.selectionObjectCreatedUser)
+
+				let thisFormInputForLinkJsRef = $(event.target).find('[name="video-add-link"]')
+				let thisFormInputForFileJsRef = $(event.target).find('[name="video-file-upload"]')
+				if(thisFormInputForLinkJsRef.length == 1) {
+					let linkVal = thisFormInputForLinkJsRef.val()
+					let imageHtml = '<br/>\
+						<div class="my-2 d-flex justify-content-center" contenteditable="false" objecttype="video" objectdata="' + linkVal + '">\
+							<iframe src="' + linkVal + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>\
+						</div>\
+						<br/>'
+					console.log(imageHtml)
+					_this_main.pasteHtmlAtCaret(imageHtml, true)
+				}
+				else if(thisFormInputForFileJsRef.length == 1){
+					// add code for upload and put link
+				}
+			})
+
+
+			// define all ui changing and initalizing functions
+
+			// function for unqiue child selection in the option bar. eg. the alignment buttons
 			_this_main.uniqueChildButtonFunction = function(event) {
 				let currentButtonJsRef = $(event.currentTarget);
 				let buttonGroupSet = currentButtonJsRef.siblings('[child-function]');
@@ -889,18 +1021,12 @@
 			}
 			_this_main.thisToolbarDiv.on('click', '[child-selection="unique"] [child-function]', _this_main.uniqueChildButtonFunction);
 
+			// initialize all add and remove tags for ui
 			$('[bb-add-remove-tag]').each(function(index, el) {
 				let elName = $(el).attr('name')
 				_this_main.pollOptionsTemplate[elName] = new addTagTemplate('[name="' + elName + '"]', 1)
 			});
-
-			console.log(_this_main.pollOptionsTemplate)
-
-			$('[bb-add-remove-tag]').each(function(index, el) {
-				let elName = $(el).attr('name')
-				_this_main.pollOptionsTemplate[elName] = new addTagTemplate('[name="' + elName + '"]', 1)
-			});
-
+			// add field on click of button
 			_this_main.thisInputTakerPopUpDiv.on('click', '[name="addAnotherField"]', function (event) {
 				let addToDiv = $(event.target).siblings('[bb-add-remove-tag]')
 				let addToDivName = addToDiv.attr('name')
@@ -912,7 +1038,7 @@
 					console.log('404 error: please refresh the page.')
 				}
 			})
-
+			// remove field on click of button
 			_this_main.thisInputTakerPopUpDiv.on('click', '[name="removeLastField"]', function (event) {
 				let removeFromDiv = $(event.target).siblings('[bb-add-remove-tag]')
 				let removeFromDivName = removeFromDiv.attr('name')
@@ -925,33 +1051,24 @@
 				}
 			})
 
-			_this_main.thisInputTakerPopUpDiv.on('click', 'button[name="pollOptionsAdd"]', function(event) {
-				let optionValueSet = []
-				let addRemoveTagRef = $($(event.target).attr('bb-getFrom'))
-				addRemoveTagRef.find('input').each(function(index, el) {
-					optionValueSet.push($(el).val())
-				});
-				_this_main.putOptionValuesInPollTemplateAndAppend(optionValueSet, addRemoveTagRef)
-			})
-
-			_this_main.putOptionValuesInPollTemplateAndAppend = function(optionValueSet, addRemoveTagRef) {
-				deactiveInputtaker()
-				pollOptionsTemplate[addRemoveTagRef.attr('name')].resetTemplateTag()
-				console.log(optionValueSet)
-				$('<span/>').html("wer").appendTo(getSelectionObject().getRangeAt(0).startContainer)
-			}
-
-			_this_main.getSelectionObject = function() {
-				let textObject = new Object();
-			    if (window.getSelection) {
-			        textObject = window.getSelection();
-			    } else if (document.selection && document.selection.createRange ) {
-					textObject = document.selection.createRange();
+			
+			/*function createLink() {
+			    // There's actually no need to save and restore the selection here. This is just an example.
+			    var savedSel = saveSelectionObject();
+			    var url = document.getElementById("url").value;
+			    restoreSelectionObject(savedSel);
+			    document.execCommand("CreateLink", false, url);
+			    var links = getTagsInSelection('a');
+			    for (var i = 0; i < links.length; ++i) {
+			        links[i].style.fontWeight = "bold";
 			    }
-			    return textObject;
-			}
+			}*/
 
 			// defining all classes
+
+			// class for adding the variable number of inputs
+			// par1: the reference for where the tag is to appended
+			// par2: the initialize count for the number of inputs, default: 0
 			function addTagTemplate(templateParentRef, initializeCount=0) {
 				this.thisTemplateParentRef = $(templateParentRef)
 				this.initializeCounter = initializeCount
@@ -980,7 +1097,8 @@
 
 				this.resetTemplateTag = function() {
 					this.thisTemplateParentRef.html('')
-					for(; this.counter<this.initializeCounter;) {
+					this.counter = 0
+					for(; this.counter<this.initializeCounter; ) {
 						this.addTemplateToTag()
 					}					
 				}
@@ -988,6 +1106,222 @@
 				// reset the tab for initialization
 				this.resetTemplateTag()
 			}
+
+			// define all contenteditable caret modfying code
+
+			// par1: the html to be inserted at caret node
+			// par2: is the html passed a string or html object
+			_this_main.pasteHtmlAtCaret = function(html, isString) {
+			    var sel, range;
+				if (window.getSelection) {
+					// IE9 and non-IE
+					sel = window.getSelection();
+					if (sel.getRangeAt && sel.rangeCount) {
+						range = sel.getRangeAt(0);
+						range.deleteContents();
+
+						// Range.createContextualFragment() would be useful here but is
+						// non-standard and not supported in all browsers (IE9, for one)
+						if(isString) {
+							var el = document.createElement("div");
+								el.innerHTML = html;
+								var frag = document.createDocumentFragment(), node, lastNode;
+								while ( (node = el.firstChild) ) {
+									lastNode = frag.appendChild(node);
+								}
+								range.insertNode(frag);
+								
+								// Preserve the selection
+								if (lastNode) {
+									range = range.cloneRange();
+									range.setStartAfter(lastNode);
+									range.collapse(true);
+									sel.removeAllRanges();
+									sel.addRange(range);
+								}
+						}
+						else {
+							range.insertNode(html);
+						}
+					}
+				} else if (document.selection && document.selection.type != "Control") {
+				    // IE < 9
+				    document.selection.createRange().pasteHTML(html);
+				}
+			}
+
+			// get the selection object for the current seletion
+			// gives the caret incase of no selection
+			_this_main.getSelectionObject = function() {
+				let textObject = new Object();
+			    if (window.getSelection) {
+			        textObject = window.getSelection();
+			    } else if (document.selection && document.selection.createRange ) {
+					textObject = document.selection.createRange();
+			    }
+			    return textObject;
+			}
+
+			_this_main.saveSelectionObject = function() {
+				if (window.getSelection) {
+					let sel = window.getSelection();
+					if (sel.getRangeAt && sel.rangeCount) {
+						let ranges = [];
+						for (let i = 0, len = sel.rangeCount; i < len; ++i) {
+						 	ranges.push(sel.getRangeAt(i));
+						}
+						return ranges;
+					}
+				} else if (document.selection && document.selection.createRange) {
+					return document.selection.createRange();
+				}
+				return null;
+			}
+
+			_this_main.restoreSelectionObject = function(savedSel) {
+				if (savedSel) {
+					if (window.getSelection) {
+						let sel = window.getSelection();
+						sel.removeAllRanges();
+						for (let i = 0, len = savedSel.length; i < len; ++i) {
+						 	sel.addRange(savedSel[i]);
+						}
+					} else if (document.selection && savedSel.select) {
+						savedSel.select();
+					}
+				}
+			}
+
+			_this_main.getTagsInSelection = function(tagName) {
+				let selectedTags = [];
+				let range, containerEl, links, linkRange;
+				if (window.getSelection) {
+					let sel = window.getSelection();
+					if (sel.getRangeAt && sel.rangeCount) {
+						linkRange = document.createRange();
+						for (let r = 0; r < sel.rangeCount; ++r) {
+							range = sel.getRangeAt(r);
+							containerEl = range.commonAncestorContainer;
+							if (containerEl.nodeType != 1) {
+								containerEl = containerEl.parentNode;
+							}
+							if (containerEl.nodeName.toLowerCase() == tagName) {
+								selectedTags.push(containerEl);
+							}
+							else {
+								links = containerEl.getElementsByTagName(tagName);
+								for (let i = 0; i < links.length; ++i) {
+									linkRange.selectNodeContents(links[i]);
+									if (linkRange.compareBoundaryPoints(range.END_TO_START, range) < 1 && linkRange.compareBoundaryPoints(range.START_TO_END, range) > -1) {
+										selectedTags.push(links[i]);
+									}
+								}
+							}
+						}
+						linkRange.detach();
+					}
+				} else if (document.selection && document.selection.type != "Control") {
+					range = document.selection.createRange();
+					containerEl = range.parentElement();
+					if (containerEl.nodeName.toLowerCase() == tagName) {
+						selectedTags.push(containerEl);
+					}
+					else {
+						links = containerEl.getElementsByTagName(tagName);
+						linkRange = document.body.createTextRange();
+						for (let i = 0; i < links.length; ++i) {
+							linkRange.moveToElementText(links[i]);
+							if (linkRange.compareEndPoints("StartToEnd", range) > -1 && linkRange.compareEndPoints("EndToStart", range) < 1) {
+								selectedTags.push(links[i]);
+							} 
+						}
+					}
+				}
+				return selectedTags;
+			}
+
+			// get the compressed data for storage of the input taker
+			_this_main.getCompressedData = function(containerDiv=null) {
+				let htmlContainerArray = []
+
+				if(containerDiv == null) {
+					containerDiv = _this_main.thisContentEditableDiv
+					containerDiv = $(containerDiv)
+				}
+				else if(containerDiv.nodeType == 1) {
+					containerDiv = $(containerDiv)
+				}
+
+				// check if the container is a custom addition
+				if(containerDiv[0] && containerDiv[0].nodeType == 1 && containerDiv.attr('objecttype')) {
+					let elObj = {
+						'type': 'custom',
+						'objecttype': containerDiv.attr('objecttype'),
+						'objectdata': containerDiv.attr('objectdata'),
+					}
+					htmlContainerArray.push(elObj)
+					return htmlContainerArray;
+
+				}
+				// check if the container is text type object
+				else if(containerDiv.nodeType == 3) {
+					let elObj = {
+						'type': 'text',
+						'text': containerDiv.data,
+					}
+					htmlContainerArray.push(elObj)
+					return htmlContainerArray;
+				}
+				// check if container has no children
+				else if(containerDiv.children().length == 0) {
+					let containerDivAttributes = {}
+					// generate attributes object
+					for(let i=0; i<containerDiv[0].attributes.length; i++) {
+						containerDivAttributes[containerDiv[0].attributes[i].name] = containerDiv[0].attributes[i].value
+					}
+					let elObj = {
+						'type': 'defined',
+						'tag': containerDiv.prop('tagName').toLowerCase(),
+						'text': containerDiv.text(),
+						// 'style': containerDivStyle,
+						'attributes': containerDivAttributes,
+					}
+					htmlContainerArray.push(elObj)
+					return htmlContainerArray;
+				}
+				
+				// else container has children nodes, consider every node including text nodes and elemtn nodes
+
+				let containerDivAttributes = {}
+				// generate attributes object
+				for(let i=0; i<containerDiv[0].attributes.length; i++) {
+					containerDivAttributes[containerDiv[0].attributes[i].name] = containerDiv[0].attributes[i].value
+				}
+				let elObj = {
+					'type': 'defined',
+					'tag': containerDiv.prop('tagName').toLowerCase(),
+					// 'style': containerDivStyle,
+					'attributes': containerDivAttributes,
+				}
+
+				let containerContents = containerDiv.contents()
+				containerContents.each(function(index, el) {
+					
+					if(el.nodeType == 1 || el.nodeType == 3)
+					{
+						let returnedElForNode = _this_main.getCompressedData(el)
+						console.log(el, returnedElForNode)
+						htmlContainerArray = htmlContainerArray.concat(returnedElForNode)
+					}
+
+				});
+				console.log(htmlContainerArray)
+				elObj['children'] = htmlContainerArray
+
+				return [elObj];
+			}
+
+
 		}
 		
 
