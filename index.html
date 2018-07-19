@@ -536,18 +536,52 @@
 			$('[name="clickconsole"]').on('click', function() {
 				let xcode = editor.getCompressedData()
 				console.log(xcode)
-				console.log(smartInputBoxDecoder(JSON.parse(xcode)))
+				let xPush = smartInputBoxDecoder(xcode)
+				console.log(xPush)
+				$('body').append(xPush)
 			})
 		});
 
 		// the decoder for the storage json object to be converted html object
 		var smartInputBoxDecoder = function(contentData) {
-			
+			// iterate over all objects
+			let formedObjectList = []
 			contentData.forEach(function(el) {
+				// create element for predefined functions
 				if(el.type == 'defined') {
-					
+					let tagObj = document.createElement(el.tag)
+					// set attributes if any
+					if(el.attributes) {
+						for(let attribute in el.attributes) {
+							let att = document.createAttribute(attribute);
+							att.value = el.attributes[attribute];
+							tagObj.setAttributeNode(att);
+						}
+					}
+					// set text value if any
+					if(el.text) {
+						tagObj.innerHTML = el.text
+					}
+					// iterate for children of the defined tag
+					if(el.children) {
+						let childElementSet = smartInputBoxDecoder(el.children)
+						childElementSet.forEach(function(childElObj) {
+							tagObj.appendChild(childElObj)
+						})
+					}
+
+					// add element to the list
+					formedObjectList.push(tagObj)
 				}
+				else if(el.type == 'text'){
+					let textObj = document.createTextNode(el.text);
+					formedObjectList.push(textObj)
+				}
+
+
 			});
+
+			return formedObjectList
 
 		}
 
@@ -1288,11 +1322,8 @@
 				}
 				// check if container has no children
 				else if(containerDiv.children().length == 0) {
-					let containerDivAttributes = {}
-					// generate attributes object
-					for(let i=0; i<containerDiv[0].attributes.length; i++) {
-						containerDivAttributes[containerDiv[0].attributes[i].name] = containerDiv[0].attributes[i].value
-					}
+					let containerDivAttributes = _this_main.getElementAttributesObject(containerDiv[0])
+
 					let elObj = {
 						'type': 'defined',
 						'tag': containerDiv.prop('tagName').toLowerCase(),
@@ -1306,11 +1337,7 @@
 				
 				// else container has children nodes, consider every node including text nodes and elemtn nodes
 
-				let containerDivAttributes = {}
-				// generate attributes object
-				for(let i=0; i<containerDiv[0].attributes.length; i++) {
-					containerDivAttributes[containerDiv[0].attributes[i].name] = containerDiv[0].attributes[i].value
-				}
+				let containerDivAttributes = _this_main.getElementAttributesObject(containerDiv[0])
 				let elObj = {
 					'type': 'defined',
 					'tag': containerDiv.prop('tagName').toLowerCase(),
@@ -1331,6 +1358,22 @@
 				elObj['children'] = htmlContainerArray
 
 				return [elObj];
+			}
+
+			// pass the DOM ref of the element, NOT the jquery ref
+			// returns an object of all attributes of the element
+			_this_main.getElementAttributesObject = function(elObj) {
+				let containerDivAttributes = {}
+				// define all attributes which do not need to be included in the compressed dataset
+				let notNeededAttributes = ['id', 'contenteditable', 'contenteditable-family', 'name']
+				// generate attributes object
+				for(let i=0; i<elObj.attributes.length; i++) {
+					console.log(elObj.attributes[i].name)
+					if( notNeededAttributes.indexOf(elObj.attributes[i].name) == -1 )
+						containerDivAttributes[elObj.attributes[i].name] = elObj.attributes[i].value
+				}
+
+				return containerDivAttributes
 			}
 
 		}
