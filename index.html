@@ -529,6 +529,10 @@
 		</div>
 	</div>
 	<button name="clickconsole">Click me</button>
+
+	<link rel="stylesheet" href="http://bookbox.in/assets/css/postCardStyle.css">
+	<script src="http://bookbox.in/assets/js/postCardStyle.js" type="text/javascript" charset="utf-8"></script>
+
 	<script type="text/javascript">
 
 		$(function(){
@@ -536,14 +540,92 @@
 			$('[name="clickconsole"]').on('click', function() {
 				let xcode = editor.getCompressedData()
 				console.log(xcode)
-				let xPush = smartInputBoxDecoder(xcode)
+				let xPush = smartInputBoxDecoder(xcode, "qwerty")
 				console.log(xPush)
 				$('body').append(xPush)
 			})
 		});
 
 		// the decoder for the storage json object to be converted html object
-		var smartInputBoxDecoder = function(contentData) {
+		var smartInputBoxDecoder = function(contentData, postId) {
+			// define all functions
+			// function returns json parsed object if the string is json else the string itself
+			let ifJsonParseElseReturn = function(str) {
+				let retVal = new Object()
+				try {
+					// statements
+					retVal = JSON.parse(str)
+				} catch(e) {
+					// statements
+					console.log(e);
+					retVal = str
+				}
+				return retVal
+			}
+
+			let pollCreator = function(pollData, pollId) {
+				let createdHtml = '\
+					<div class="my-4">\
+						<div class="row no-gutters">\
+							<div class="offset-md-1 col-md-8 col-12">\
+								<div class="pollCreate">\
+									<form>\
+									';
+									for(let i=0; i<pollData.length; i++) {
+										createdHtml += '\
+										<div class="row my-2">\
+											<div class="col-2 bigRadioOuterDiv">\
+												<button class="bigRadio notSelected" type="button">\
+													<div class="bigRadioDiv">\
+													</div>\
+													<input type="radio" class="bigRadio" name="' + postId + '" value="' + (i+1) + '">\
+												</button>\
+											</div>\
+											<div class="col-10">\
+												<label class="lead" for=\'[name="' + postId + '"]\'>' + pollData[i] + '</label>\
+											</div>\
+										</div>\
+										';
+									}
+				createdHtml += ' 	</form>\
+								</div>\
+							</div>\
+						</div>\
+					</div>\
+				';
+
+				let pollObjEl = document.createElement('div')
+				pollObjEl.innerHTML = createdHtml
+
+				return pollObjEl
+			}
+
+			let imageElCreator = function(imgSrc) {
+				let createdHtml= '\
+					<div class="my-2">\
+						<img src="' + imgSrc + '" class="mainColumnCardImage img-thumbnail">\
+					</div>\
+				';
+
+				let imgObjEl = document.createElement('div')
+				imgObjEl.innerHTML = createdHtml
+
+				return imgObjEl
+			}
+
+			let videoElCreator = function(videoSrc) {
+				let createdHtml= '\
+					<div class="embed-responsive embed-responsive-16by9 my-4">\
+					  <iframe class="embed-responsive-item" src="' + videoSrc + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>\
+					</div>\
+				';
+
+				let imgObjEl = document.createElement('div')
+				imgObjEl.innerHTML = createdHtml
+
+				return imgObjEl
+			}
+
 			// iterate over all objects
 			let formedObjectList = []
 			contentData.forEach(function(el) {
@@ -573,9 +655,23 @@
 					// add element to the list
 					formedObjectList.push(tagObj)
 				}
-				else if(el.type == 'text'){
+				else if(el.type == 'text') {
 					let textObj = document.createTextNode(el.text);
 					formedObjectList.push(textObj)
+				}
+				else if(el.type == 'custom') {
+					if(el.objecttype == 'image') {
+						let imgObj = imageElCreator(el.objectdata)
+						formedObjectList.push(imgObj)
+					}
+					else if(el.objecttype='poll') {
+						let pollObj = pollCreator(ifJsonParseElseReturn(el.objectdata), postId)
+						formedObjectList.push(pollObj)
+					}
+					else if(el.objecttype == 'video') {
+						let videoObj = videoElCreator(el.objectdata)
+						formedObjectList.push(videoObj)
+					}
 				}
 
 
@@ -932,7 +1028,8 @@
 					}
 				}
 				else {
-					let parameter = "";
+					_this_main.selectionObjectCreatedUser = _this_main.saveSelectionObject()
+
 					_this_main.activateInputTaker(actionProp)
 				}
 			}
@@ -970,6 +1067,7 @@
 				});
 				_this_main.deactiveInputtaker()
 				_this_main.thisContentEditableDiv.focus();
+				
 				_this_main.pollOptionsTemplate[addRemoveTagRef.attr('name')].resetTemplateTag()
 
 				let pollEl = '<br/><br/><div objecttype="poll" objectdata=\'' + JSON.stringify(optionValueSet) + '\' class="editorPollDiv" contenteditable="false"><form>';
@@ -987,6 +1085,8 @@
 					pollEl += pollOptionEl
 				});
 				pollEl += '</form></div><br/><br/>'
+				// restore selection point
+				_this_main.restoreSelectionObject(_this_main.selectionObjectCreatedUser)
 				// add it to the editable div
 				_this_main.pasteHtmlAtCaret(pollEl, true)
 
@@ -1012,7 +1112,7 @@
 				event.preventDefault()
 				_this_main.deactiveInputtaker()
 				_this_main.thisContentEditableDiv.focus();
-
+				// put the caret in original position
 				_this_main.restoreSelectionObject(_this_main.selectionObjectCreatedUser)
 
 				let thisFormInputForLinkJsRef = $(event.target).find('[name="image-add-link"]')
@@ -1365,7 +1465,7 @@
 			_this_main.getElementAttributesObject = function(elObj) {
 				let containerDivAttributes = {}
 				// define all attributes which do not need to be included in the compressed dataset
-				let notNeededAttributes = ['id', 'contenteditable', 'contenteditable-family', 'name']
+				let notNeededAttributes = ['id', 'contenteditable', 'contenteditable-family', 'name', 'class']
 				// generate attributes object
 				for(let i=0; i<elObj.attributes.length; i++) {
 					console.log(elObj.attributes[i].name)
