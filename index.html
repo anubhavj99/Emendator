@@ -664,7 +664,7 @@
 						let imgObj = imageElCreator(el.objectdata)
 						formedObjectList.push(imgObj)
 					}
-					else if(el.objecttype='poll') {
+					else if(el.objecttype == 'poll') {
 						let pollObj = pollCreator(ifJsonParseElseReturn(el.objectdata), postId)
 						formedObjectList.push(pollObj)
 					}
@@ -737,10 +737,10 @@
 					'commandName': 'underline',
 				},
 				'highlight': {
-					'isCommand': true,
-					'toBeChecked': true,
-					'parameter': '#fcf8e3',
-					'commandName': 'hiliteColor',
+					'isCommand': false,
+					'toBeChecked': false,
+					'surroundTag': true,
+					'tagName': 'mark',
 				},
 				'subscript': {
 					'isCommand': true,
@@ -1027,6 +1027,13 @@
 						})
 					}
 				}
+				else if(_this_main.editorButtons[actionProp]['surroundTag']) {
+					_this_main.thisContentEditableDiv.focus();
+					let selObj = _this_main.getSelectionObject()
+
+					selObj.getRangeAt(0).surroundContents(document.createElement(_this_main.editorButtons[actionProp]['tagName']))
+
+				}
 				else {
 					_this_main.selectionObjectCreatedUser = _this_main.saveSelectionObject()
 
@@ -1119,7 +1126,7 @@
 				let thisFormInputForFileJsRef = $(event.target).find('[name="image-file-upload"]')
 				if(thisFormInputForLinkJsRef.length == 1) {
 					let linkVal = thisFormInputForLinkJsRef.val()
-					let imageHtml = '<br/><div class="my-2 text-center" contenteditable="false" class="img-thumbnail" objecttype="image" objectdata="' + linkVal + '"><img style="width: 90%;max-width: 300px;" src="' + linkVal + '"></div><br/>'
+					let imageHtml = '<br/><div class="my-2" contenteditable="false" class="img-thumbnail" objecttype="image" objectdata="' + linkVal + '"><img style="width: 90%;max-width: 300px;" src="' + linkVal + '"></div><br/>'
 					console.log(imageHtml)
 					_this_main.pasteHtmlAtCaret(imageHtml, true)
 				}
