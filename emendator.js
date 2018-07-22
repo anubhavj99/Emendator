@@ -104,6 +104,18 @@ var smartInputBoxDecoder = function(contentData, postId) {
 				})
 			}
 
+			// define classes and respnsiveness for table
+			if(el.tag.toLowerCase() == 'table') {
+				let surroundingDivEl = document.createElement('div')
+				surroundingDivEl.className = 'table-responsive my-4'
+				tagObj.className = 'table table-hover table-bordered'
+				surroundingDivEl.appendChild(tagObj)
+				tagObj = surroundingDivEl
+			}
+			if(el.tag.toLowerCase() == 'thead') {
+				tagObj.className = 'thead-light'
+			}
+
 			// add element to the list
 			formedObjectList.push(tagObj)
 		}
@@ -270,6 +282,12 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 			'commandName': 'outdent',
 		},
 		'addPoll': {
+			'isCommand': false,
+			'toBeChecked': false,
+			'parameter': true,
+			'upload': true,
+		},
+		'createTable': {
 			'isCommand': false,
 			'toBeChecked': false,
 			'parameter': true,
@@ -600,17 +618,63 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 		let thisFormInputForFileJsRef = $(event.target).find('[name="video-file-upload"]')
 		if(thisFormInputForLinkJsRef.length == 1) {
 			let linkVal = thisFormInputForLinkJsRef.val()
-			let imageHtml = '<br/>\
+			let videoHtml = '<br/>\
 				<div class="my-2 d-flex justify-content-center" contenteditable="false" objecttype="video" objectdata="' + linkVal + '">\
 					<iframe src="' + linkVal + '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>\
 				</div>\
 				<br/>'
-			// console.log(imageHtml)
-			_this_main.pasteHtmlAtCaret(imageHtml, true)
+			// console.log(videoHtml)
+			_this_main.pasteHtmlAtCaret(videoHtml, true)
 		}
 		else if(thisFormInputForFileJsRef.length == 1){
 			// add code for upload and put link
 		}
+	})
+
+	// capture the create table event
+	// create the table with the row and column count specified
+	_this_main.thisParentContainerDiv.on('submit', '[name="createTable-form"]', function(event) {
+		event.preventDefault();
+		_this_main.deactiveInputtaker()
+		_this_main.thisContentEditableDiv.focus();
+		_this_main.restoreSelectionObject(_this_main.selectionObjectCreatedUser)
+
+		let thisFormRef = $(event.target)
+		let rowCount = thisFormRef.find('[name="row"]').val()
+		let columnCount = thisFormRef.find('[name="column"]').val()
+		let isHeadertoBeIncluded = thisFormRef.find('[name="includeHeader"]').is(':checked')
+
+
+		let createdTableHtml = '\
+			<table class="table table-bordered table-editing-hover">\
+		';
+
+		createdTableHtml += '\
+			<thead class="thead-light">\
+				<tr>\
+		';
+		for(let j=0; j<columnCount; j++) {
+			createdTableHtml += '<th></th>';
+		}
+		createdTableHtml += '\
+				</tr>\
+			</thead>\
+		';
+		
+		createdTableHtml += '<tbody>'
+		for(let i=0; i<rowCount; i++) {
+			createdTableHtml += '<tr>';
+			for(let j=0; j<columnCount; j++) {
+				createdTableHtml += '<td></td>';
+			}
+			createdTableHtml += '</tr>';
+		}
+		createdTableHtml += '\
+				</tbody>\
+			</table>\
+		';
+		_this_main.pasteHtmlAtCaret(createdTableHtml, true)
+
 	})
 
 
