@@ -127,6 +127,11 @@ ol ol ol {
 	font-family: monospace !important;
 	font-size: 16px;
 }
+.table-editing-hover td:hover,
+.table-editing-hover th:hover {
+	box-shadow: inset 1px 1px 5px 2px #ddd;
+	background-color: rgba(0,0,0,.075);
+}
 
 /* input taker modal css */
 .inputTakerBody {
