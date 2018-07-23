@@ -934,17 +934,20 @@
 			
 			}
 
-			/*_this_main.thisContentEditableDiv.on('paste', function(event) {
+			_this_main.thisContentEditableDiv.on('paste', function(event) {
 				console.log(event)
 				event.stopPropagation();
 				event.preventDefault();
 				let clipboardData = event.originalEvent.clipboardData || window.clipboardData;
 				let pastedData = clipboardData.getData('text/plain');
-				
+				let pastedDataTextArray = pastedData.split('\n')
+				for(let i=1; i<pastedDataTextArray.length; i++) {
+					pastedDataTextArray[i] = '<div>'.concat(pastedDataTextArray[i].concat('</div>'))
+				}
 
-				_this_main.pasteHtmlAtCaret(document.createNode(pastedData))
+				_this_main.pasteHtmlAtCaret(pastedDataTextArray.join(''), true)
 
-			})*/
+			})
 
 			_this_main.checkForEachButtonToBeActiveAndSetValues = function() {
 
