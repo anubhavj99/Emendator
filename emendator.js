@@ -145,10 +145,367 @@ var smartInputBoxDecoder = function(contentData, postId) {
 
 }
 
+// gives the html node for the toolbar on the basis of the options provided
+// par1: the object with options that are to be set as keys and their respective values to be true
+var smartInputBoxToolbarCreator = function(OptionsToBeIncluded) {
+	let toolbarHtmlText = ''
+
+	// CHECK FOR EACH CHILD GROUP
+	// THEN CHECK FOR EACH ELEMENT IN IT
+	// ADD THE HTML AND PARSE AT LAST TO RETURN THE CREATED NODE ELEMENT
+	
+
+	if(OptionsToBeIncluded.undoaction || OptionsToBeIncluded.redoaction || OptionsToBeIncluded.printaction) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.undoaction) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="undoaction">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-undo-alt"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.redoaction) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="redoaction">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-redo-alt"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.printaction) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="printaction">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-print"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+
+	}
+
+
+	if(OptionsToBeIncluded.fontStyle || OptionsToBeIncluded.fontSize) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.fontStyle) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child active-no-stay" child-function="fontStyle">\
+					<span class="inputBoxOption-child-view withInput">\
+						<select class="inputBoxOption-input no-active-trigger form-control" type="text" name="getValue" value="Serif">\
+							<option value="serif" style="font-family: serif;">Serif</option>\
+							<option value="sans-serif" style="font-family: sans-serif;">Sans-Serif</option>\
+							<option value="monospace" style="font-family: monospace;">Monospace</option>\
+						</select>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.fontSize) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child active-no-stay" child-function="fontSize">\
+					<span class="inputBoxOption-child-view withInput">\
+						<select class="inputBoxOption-input no-active-trigger form-control" name="getValue" type="number">\
+							<option value="1">1</option>\
+							<option value="2">2</option>\
+							<option value="3" selected>3 (Default)</option>\
+							<option value="4">4</option>\
+							<option value="5">5</option>\
+							<option value="6">6</option>\
+							<option value="7">7</option>\
+						</select>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+
+	}
+
+
+	if(OptionsToBeIncluded.italic || OptionsToBeIncluded.bold || OptionsToBeIncluded.underline || OptionsToBeIncluded.highlight || OptionsToBeIncluded.subscript || OptionsToBeIncluded.superscript) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.italic) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="italic">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-italic"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.bold) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="bold">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-bold"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.underline) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="underline">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-underline"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.highlight) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="highlight">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-highlighter"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.subscript) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="subscript">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-subscript"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.superscript) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="superscript">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-superscript"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+
+	}
+
+
+	if(OptionsToBeIncluded.addLink || OptionsToBeIncluded.addImage || OptionsToBeIncluded.addVideo) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.addLink) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="addLink">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-link"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.addImage) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="addImage">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-images"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.addVideo) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="addVideo">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-video"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+
+	}
+
+	// UNIQUE CHILD IN THIS, THIS THE EXTRA ATTRIBUTE IN PARENT
+	if(OptionsToBeIncluded.alignLeft || OptionsToBeIncluded.alignCenter || OptionsToBeIncluded.alignRight || OptionsToBeIncluded.alignJustify) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group" child-selection="unique">'
+
+		if(OptionsToBeIncluded.alignLeft) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="alignLeft">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-align-left"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.alignCenter) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="alignCenter">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-align-center"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.alignRight) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="alignRight">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-align-right"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.alignJustify) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="alignJustify">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-align-justify"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+
+	}
+
+
+	if(OptionsToBeIncluded.textHeight) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.textHeight) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child" child-function="textHeight">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-text-height"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+	}
+
+
+	if(OptionsToBeIncluded.unorderedListMaker || OptionsToBeIncluded.orderedListMaker || OptionsToBeIncluded.indent || OptionsToBeIncluded.outdent) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.unorderedListMaker) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="unorderedListMaker">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-list-ul"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.orderedListMaker) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="orderedListMaker">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-list-ol"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.indent) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="indent">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-indent"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.outdent) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="outdent">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-outdent"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+
+	}
+
+
+	if(OptionsToBeIncluded.addPoll || OptionsToBeIncluded.createTable) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.addPoll) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="addPoll">\
+					<span class="inputBoxOption-child-view">\
+						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTAuNjY3IDQ5MC42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ5MC42NjcgNDkwLjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBkPSJNMTA1LjUxNSwxNDYuOTg3YzQuNjA4LDMuNjkxLDExLjMwNywyLjk2NSwxNC45OTctMS42NDNjMzAuNjEzLTM4LjE0NCw3Ni4wNzUtNjAuMDExLDEyNC44LTYwLjAxMSAgICAgYzQ4LjcyNSwwLDk0LjE4NywyMS44NjcsMTI0LjgsNjAuMDExYzIuMTEyLDIuNjI0LDUuMjI3LDMuOTg5LDguMzQxLDMuOTg5YzIuMzQ3LDAsNC42OTMtMC43NjgsNi42NTYtMi4zNDcgICAgIGM0LjU4Ny0zLjY5MSw1LjMzMy0xMC40MTEsMS42NDMtMTQuOTk3QzM1Mi4wNjQsODguNzg5LDMwMC41MjMsNjQsMjQ1LjMxMiw2NGMtNTUuMjExLDAtMTA2Ljc3MywyNC43ODktMTQxLjQ0LDY3Ljk4OSAgICAgQzEwMC4xODEsMTM2LjU3NiwxMDAuOTI4LDE0My4yOTYsMTA1LjUxNSwxNDYuOTg3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMjg4LDI5OC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3YtNzQuNjY3SDMyMGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3UzMyNS44ODgsMTkyLDMyMCwxOTIgICAgIGgtNjRjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdzNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdoMjEuMzMzVjI4OEMyNzcuMzMzLDI5My44ODgsMjgyLjExMiwyOTguNjY3LDI4OCwyOTguNjY3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTcwLjY2NywyMjR2NDIuNjY3YzAsMTcuNjQzLDE0LjM1NywzMiwzMiwzMmMxNy42NDMsMCwzMi0xNC4zNTcsMzItMzJWMjI0YzAtMTcuNjQzLTE0LjM1Ny0zMi0zMi0zMiAgICAgQzE4NS4wMjQsMTkyLDE3MC42NjcsMjA2LjM1NywxNzAuNjY3LDIyNHogTTIxMy4zMzMsMjI0djQyLjY2N2MwLDUuODg4LTQuNzc5LDEwLjY2Ny0xMC42NjcsMTAuNjY3UzE5MiwyNzIuNTU1LDE5MiwyNjYuNjY3VjIyNCAgICAgYzAtNS44ODgsNC43NzktMTAuNjY3LDEwLjY2Ny0xMC42NjdTMjEzLjMzMywyMTguMTEyLDIxMy4zMzMsMjI0eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMzYxLjM0NCwzNTUuMzI4Yy0zMC41OTIsMzIuMjM1LTcxLjc4Nyw1MC4wMDUtMTE1Ljk4OSw1MC4wMDVjLTQ0LjIwMywwLTg1LjM5Ny0xNy43NDktMTE1Ljk4OS01MC4wMDUgICAgIGMtNC4wMzItNC4yNjctMTAuNzk1LTQuNDM3LTE1LjA4My0wLjQwNWMtNC4yODgsNC4wNTMtNC40NTksMTAuNzk1LTAuNDA1LDE1LjA4M2MzNC42NDUsMzYuNTQ0LDgxLjM0NCw1Ni42NjEsMTMxLjQ1Niw1Ni42NjEgICAgIHM5Ni44MTEtMjAuMTE3LDEzMS40OTktNTYuNjYxYzQuMDMyLTQuMjg4LDMuODYxLTExLjA1MS0wLjQwNS0xNS4wODNDMzcyLjE2LDM1MC44OTEsMzY1LjM5NywzNTEuMDYxLDM2MS4zNDQsMzU1LjMyOHoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPHBhdGggZD0iTTI0NS4zMzMsMEMxMTAuMDU5LDAsMCwxMTAuMDU5LDAsMjQ1LjMzM3MxMTAuMDU5LDI0NS4zMzMsMjQ1LjMzMywyNDUuMzMzczI0NS4zMzMtMTEwLjA1OSwyNDUuMzMzLTI0NS4zMzMgICAgIFMzODAuNjA4LDAsMjQ1LjMzMywweiBNMjQ1LjMzMyw0NjkuMzMzYy0xMjMuNTIsMC0yMjQtMTAwLjQ4LTIyNC0yMjRzMTAwLjQ4LTIyNCwyMjQtMjI0czIyNCwxMDAuNDgsMjI0LDIyNCAgICAgUzM2OC44NTMsNDY5LjMzMywyNDUuMzMzLDQ2OS4zMzN6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTxwYXRoIGQ9Ik0zOTQuNjY3LDI3Ny4zMzNoLTMyVjI1NmgxMC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3MtNC43NzktMTAuNjY3LTEwLjY2Ny0xMC42NjdoLTEwLjY2N3YtMjEuMzMzaDMyICAgICBjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDE5MiwzOTQuNjY3LDE5MkgzNTJjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdWMjg4ICAgICBjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N2g0Mi42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDI3Ny4zMzMsMzk0LjY2NywyNzcuMzMzeiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTE2LjY1MSwyOTEuNzU1bDMyLTg1LjMzM2MyLjA2OS01LjUyNS0wLjcyNS0xMS42NjktNi4yMjktMTMuNzM5Yy01LjU0Ny0yLjA0OC0xMS42NjksMC43MDQtMTMuNzM5LDYuMjI5ICAgICBsLTIyLjAxNiw1OC43MDlsLTIyLjAxNi01OC43MDljLTIuMDY5LTUuNTA0LTguMjEzLTguMjU2LTEzLjczOS02LjIyOWMtNS41MDQsMi4wNjktOC4yOTksOC4yMTMtNi4yMjksMTMuNzM5bDMyLDg1LjMzMyAgICAgYzEuNTU3LDQuMTYsNS41NDcsNi45MTIsOS45ODQsNi45MTJDMTExLjEwNCwyOTguNjY3LDExNS4wOTMsMjk1LjkxNSwxMTYuNjUxLDI5MS43NTV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />\
+					</span>\
+				</button>\
+			';
+		}
+
+		if(OptionsToBeIncluded.createTable) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="createTable">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-table"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+	}
+
+
+	if(OptionsToBeIncluded.removeFormatting) {
+		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.removeFormatting) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="removeFormatting">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-eraser"></i>\
+					</span>\
+				</button>\
+			';
+		}
+
+		toolbarHtmlText += 	'</div>'
+	}
+
+	// return the parsed html from string
+	return $.parseHTML(toolbarHtmlText)
+
+}
+
 // this is the code for input box
 // it is a class based code
 // initialize it with constructor values and voila!
-var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, inputTakerPopUpId) {
+var smartInputBox = function(initializerParamSet) {
+
+	// parentContainerId, editorDivId, toolbarDivId, inputTakerPopUpId, toolbarOptions
 
 	document.execCommand('styleWithCSS', null, true)
 
@@ -300,10 +657,10 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 		},
 	};
 	
-	_this_main.thisParentContainerDiv = $(parentContainerId)
-	_this_main.thisContentEditableDiv = $(editorDivId)
-	_this_main.thisToolbarDiv = $(toolbarDivId)
-	_this_main.thisInputTakerPopUpDiv = $(inputTakerPopUpId)
+	_this_main.thisParentContainerDiv = $(initializerParamSet.parentContainerId)
+	_this_main.thisContentEditableDiv = $(initializerParamSet.editorDivId)
+	_this_main.thisToolbarDiv = $(initializerParamSet.toolbarDivId)
+	_this_main.thisInputTakerPopUpDiv = $(initializerParamSet.inputTakerPopUpId)
 	_this_main.thisInputTakerTabs = new Object()
 	_this_main.pollOptionsTemplate = new Object()
 	_this_main.selectionObjectCreatedUser = new Object()
@@ -316,6 +673,10 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 	_this_main.thisContentEditableDiv.addClass('inputBox')
 	_this_main.thisContentEditableDiv.addClass('clearfix')
 
+	// make the toolbar and append all the included options in the paramset
+	addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
+	_this_main.thisToolbarDiv.append(smartInputBoxToolbarCreator(addToolbarOptions))
+
 	// set the tabs div reference
 	for(let editorKey in _this_main.editorButtons) {
 
@@ -326,6 +687,21 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 		}
 	
 	}
+
+	_this_main.thisContentEditableDiv.on('paste', function(event) {
+		console.log(event)
+		event.stopPropagation();
+		event.preventDefault();
+		let clipboardData = event.originalEvent.clipboardData || window.clipboardData;
+		let pastedData = clipboardData.getData('text/plain');
+		let pastedDataTextArray = pastedData.split('\n')
+		for(let i=1; i<pastedDataTextArray.length; i++) {
+			pastedDataTextArray[i] = '<div>'.concat(pastedDataTextArray[i].concat('</div>'))
+		}
+
+		_this_main.pasteHtmlAtCaret(pastedDataTextArray.join(''), true)
+
+	})
 
 	_this_main.checkForEachButtonToBeActiveAndSetValues = function() {
 
@@ -468,11 +844,13 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 	// execute the action of the button clicked in the option bar
 	// the parameters in the editorTab array define how the execution is to be processed for each button
 	_this_main.doActionOfReferencedButton = function(clickedOptionButtonJsref) {
+		// put focus on the text box
+		_this_main.thisContentEditableDiv.focus();
 
 		let actionProp = clickedOptionButtonJsref.attr('child-function')
+
 		if(_this_main.editorButtons[actionProp]['isCommand'] && _this_main.editorButtons[actionProp]['parameter'] != true)
 		{
-			_this_main.thisContentEditableDiv.focus();
 			// console.log(actionProp, _this_main.editorButtons[actionProp])
 			document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, _this_main.editorButtons[actionProp]['parameter']);
 		}
@@ -492,13 +870,11 @@ var smartInputBox = function(parentContainerId, editorDivId, toolbarDivId, input
 				clickedOptionButtonJsref.find('[name="getValue"]').on('change', function(event) {
 					let parameter = $(event.target).val();
 					// console.log(_this_main.editorButtons[actionProp]['commandName'], parameter)
-					_this_main.thisContentEditableDiv.focus();
 					document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, parameter);
 				})
 			}
 		}
 		else if(_this_main.editorButtons[actionProp]['surroundTag']) {
-			_this_main.thisContentEditableDiv.focus();
 			let selObj = _this_main.getSelectionObject()
 
 			selObj.getRangeAt(0).surroundContents(document.createElement(_this_main.editorButtons[actionProp]['tagName']))
