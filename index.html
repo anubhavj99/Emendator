@@ -209,7 +209,7 @@
 				</button>
 			</div> -->
 		</div>
-		
+
 		<div contenteditable-family="f1" id="content-ed-f1">
 		</div>
 
@@ -400,7 +400,40 @@
 	<script type="text/javascript">
 
 		$(function(){
-			var editor = new smartInputBox('#contentEditParent', '#content-ed-f1', '#content-ed-f1-toolbar', '#popUpInput');
+			var editor = new smartInputBox({
+				parentContainerId: '#contentEditParent',
+				editorDivId: '#content-ed-f1',
+				toolbarDivId: '#content-ed-f1-toolbar',
+				inputTakerPopUpId: '#popUpInput',
+				toolbarOptions: {
+					'undoaction': true,
+					'redoaction': true,
+					'printaction': true,
+					'fontStyle': true,
+					'fontSize': true,
+					'italic': true,
+					'bold': true,
+					'underline': true,
+					'highlight': true,
+					'subscript': true,
+					'superscript': true,
+					'addLink': true,
+					'addImage': true,
+					'addVideo': true,
+					'alignLeft': true,
+					'alignCenter': true,
+					'alignRight': true,
+					'alignJustify': true,
+					'textHeight': true,
+					'orderedListMaker': true,
+					'unorderedListMaker': true,
+					'indent': true,
+					'outdent': true,
+					'addPoll': true,
+					'createTable': true,
+					'removeFormatting': true,
+				},
+			});
 			$('[name="clickconsole"]').on('click', function() {
 				let xcode = editor.getCompressedData()
 				console.log(xcode)
