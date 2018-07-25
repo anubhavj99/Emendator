@@ -670,8 +670,17 @@ var smartInputBox = function(initializerParamSet) {
 	// put necessary properties in the basic references
 	_this_main.thisParentContainerDiv.css('position', 'relative');
 	_this_main.thisContentEditableDiv.attr('contenteditable', 'true');
+	_this_main.thisContentEditableDiv.empty();
 	_this_main.thisContentEditableDiv.addClass('inputBox')
 	_this_main.thisContentEditableDiv.addClass('clearfix')
+	_this_main.thisToolbarDiv.addClass('inputBoxOptionSet')
+	// if the input is to be smaller
+	if(initializerParamSet.isCompactContainer)
+		_this_main.thisParentContainerDiv.addClass('inputBoxCombinedSmall')
+	if(initializerParamSet.placeholder)
+	{
+		_this_main.thisContentEditableDiv.attr('placeholder', initializerParamSet.placeholder)
+	}
 
 	// make the toolbar and append all the included options in the paramset
 	addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;

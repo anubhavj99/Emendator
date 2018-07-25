@@ -37,6 +37,7 @@
 <body>
 	
 	<style>
+
 		/* option bar css */
 		.inputBoxOptionSet {
 			border: 1px solid #aaa;
@@ -48,6 +49,12 @@
 			overflow-x: scroll;
 			padding: 0 15px;
 		}
+		.inputBoxCombinedSmall .inputBoxOptionSet {
+			border-width: 1px 1px 0 1px;
+			border-radius: 2px 2px 0 0;
+			margin-bottom: 0;
+			background: #efefef;
+		}
 		.inputBoxOptionSet::-webkit-scrollbar {
 			display: none;
 		}
@@ -56,6 +63,9 @@
 			display: flex;
 			justify-content: flex-start;
 			padding: 3px 5px;
+		}
+		.inputBoxCombinedSmall .inputBoxOption-child-group {
+			border-right: none;
 		}
 		.inputBoxOption-child {
 			position: relative;
@@ -148,6 +158,15 @@
 			caret-color: grey;
 			min-height: 100px;
 		}
+		.inputBoxCombinedSmall .inputBox {
+			border-width: 0 1px 1px 1px;
+			border-radius: 0 0 2px 2px;
+			margin-top: 0;
+			box-shadow: none;
+		}
+		.inputBoxCombinedSmall .inputBox:focus {
+			box-shadow: none;
+		}
 		.inputBox:empty:not(:focus):before {
 			display: block;
 			font-style: italic;
@@ -173,6 +192,11 @@
 			background: #eee;
 			font-family: monospace !important;
 			font-size: 16px;
+		}
+		.table-editing-hover td:hover,
+		.table-editing-hover th:hover {
+			box-shadow: inset 1px 1px 5px 2px #ddd;
+			background-color: rgba(0,0,0,.075);
 		}
 
 		/* input taker modal css */
@@ -227,25 +251,6 @@
 		}
 		.modal-loader.activate {
 			display: none;
-		}
-
-		.inputBoxCombinedSmall .inputBoxOptionSet {
-			border-width: 1px 1px 0 1px;
-			border-radius: 2px 2px 0 0;
-			margin-bottom: 0;
-			background: #efefef;
-		}
-		.inputBoxCombinedSmall .inputBox {
-			border-width: 0 1px 1px 1px;
-			border-radius: 0 0 2px 2px;
-			margin-top: 0;
-			box-shadow: none;
-		}
-		.inputBoxCombinedSmall .inputBox:focus {
-			box-shadow: none;
-		}
-		.inputBoxCombinedSmall .inputBoxOption-child-group {
-			border-right: none;
 		}
 
 	</style>
@@ -425,13 +430,6 @@
 			</div> -->
 		</div>
 		
-		<style>
-			.table-editing-hover td:hover,
-			.table-editing-hover th:hover {
-				box-shadow: inset 1px 1px 5px 2px #ddd;
-				background-color: rgba(0,0,0,.075);
-			}
-		</style>
 		<div contenteditable-family="f1" id="content-ed-f1">
 		</div>
 
@@ -1128,7 +1126,7 @@
 					toolbarHtmlText += '\
 						<button class="inputBoxOption-child noActive" child-function="addPoll">\
 							<span class="inputBoxOption-child-view">\
-								<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTAuNjY3IDQ5MC42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ5MC42NjcgNDkwLjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBkPSJNMTA1LjUxNSwxNDYuOTg3YzQuNjA4LDMuNjkxLDExLjMwNywyLjk2NSwxNC45OTctMS42NDNjMzAuNjEzLTM4LjE0NCw3Ni4wNzUtNjAuMDExLDEyNC44LTYwLjAxMSAgICAgYzQ4LjcyNSwwLDk0LjE4NywyMS44NjcsMTI0LjgsNjAuMDExYzIuMTEyLDIuNjI0LDUuMjI3LDMuOTg5LDguMzQxLDMuOTg5YzIuMzQ3LDAsNC42OTMtMC43NjgsNi42NTYtMi4zNDcgICAgIGM0LjU4Ny0zLjY5MSw1LjMzMy0xMC40MTEsMS42NDMtMTQuOTk3QzM1Mi4wNjQsODguNzg5LDMwMC41MjMsNjQsMjQ1LjMxMiw2NGMtNTUuMjExLDAtMTA2Ljc3MywyNC43ODktMTQxLjQ0LDY3Ljk4OSAgICAgQzEwMC4xODEsMTM2LjU3NiwxMDAuOTI4LDE0My4yOTYsMTA1LjUxNSwxNDYuOTg3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMjg4LDI5OC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3YtNzQuNjY3SDMyMGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3UzMyNS44ODgsMTkyLDMyMCwxOTIgICAgIGgtNjRjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdzNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdoMjEuMzMzVjI4OEMyNzcuMzMzLDI5My44ODgsMjgyLjExMiwyOTguNjY3LDI4OCwyOTguNjY3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTcwLjY2NywyMjR2NDIuNjY3YzAsMTcuNjQzLDE0LjM1NywzMiwzMiwzMmMxNy42NDMsMCwzMi0xNC4zNTcsMzItMzJWMjI0YzAtMTcuNjQzLTE0LjM1Ny0zMi0zMi0zMiAgICAgQzE4NS4wMjQsMTkyLDE3MC42NjcsMjA2LjM1NywxNzAuNjY3LDIyNHogTTIxMy4zMzMsMjI0djQyLjY2N2MwLDUuODg4LTQuNzc5LDEwLjY2Ny0xMC42NjcsMTAuNjY3UzE5MiwyNzIuNTU1LDE5MiwyNjYuNjY3VjIyNCAgICAgYzAtNS44ODgsNC43NzktMTAuNjY3LDEwLjY2Ny0xMC42NjdTMjEzLjMzMywyMTguMTEyLDIxMy4zMzMsMjI0eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMzYxLjM0NCwzNTUuMzI4Yy0zMC41OTIsMzIuMjM1LTcxLjc4Nyw1MC4wMDUtMTE1Ljk4OSw1MC4wMDVjLTQ0LjIwMywwLTg1LjM5Ny0xNy43NDktMTE1Ljk4OS01MC4wMDUgICAgIGMtNC4wMzItNC4yNjctMTAuNzk1LTQuNDM3LTE1LjA4My0wLjQwNWMtNC4yODgsNC4wNTMtNC40NTksMTAuNzk1LTAuNDA1LDE1LjA4M2MzNC42NDUsMzYuNTQ0LDgxLjM0NCw1Ni42NjEsMTMxLjQ1Niw1Ni42NjEgICAgIHM5Ni44MTEtMjAuMTE3LDEzMS40OTktNTYuNjYxYzQuMDMyLTQuMjg4LDMuODYxLTExLjA1MS0wLjQwNS0xNS4wODNDMzcyLjE2LDM1MC44OTEsMzY1LjM5NywzNTEuMDYxLDM2MS4zNDQsMzU1LjMyOHoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPHBhdGggZD0iTTI0NS4zMzMsMEMxMTAuMDU5LDAsMCwxMTAuMDU5LDAsMjQ1LjMzM3MxMTAuMDU5LDI0NS4zMzMsMjQ1LjMzMywyNDUuMzMzczI0NS4zMzMtMTEwLjA1OSwyNDUuMzMzLTI0NS4zMzMgICAgIFMzODAuNjA4LDAsMjQ1LjMzMywweiBNMjQ1LjMzMyw0NjkuMzMzYy0xMjMuNTIsMC0yMjQtMTAwLjQ4LTIyNC0yMjRzMTAwLjQ4LTIyNCwyMjQtMjI0czIyNCwxMDAuNDgsMjI0LDIyNCAgICAgUzM2OC44NTMsNDY5LjMzMywyNDUuMzMzLDQ2OS4zMzN6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTxwYXRoIGQ9Ik0zOTQuNjY3LDI3Ny4zMzNoLTMyVjI1NmgxMC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3MtNC43NzktMTAuNjY3LTEwLjY2Ny0xMC42NjdoLTEwLjY2N3YtMjEuMzMzaDMyICAgICBjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDE5MiwzOTQuNjY3LDE5MkgzNTJjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdWMjg4ICAgICBjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N2g0Mi42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDI3Ny4zMzMsMzk0LjY2NywyNzcuMzMzeiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTE2LjY1MSwyOTEuNzU1bDMyLTg1LjMzM2MyLjA2OS01LjUyNS0wLjcyNS0xMS42NjktNi4yMjktMTMuNzM5Yy01LjU0Ny0yLjA0OC0xMS42NjksMC43MDQtMTMuNzM5LDYuMjI5ICAgICBsLTIyLjAxNiw1OC43MDlsLTIyLjAxNi01OC43MDljLTIuMDY5LTUuNTA0LTguMjEzLTguMjU2LTEzLjczOS02LjIyOWMtNS41MDQsMi4wNjktOC4yOTksOC4yMTMtNi4yMjksMTMuNzM5bDMyLDg1LjMzMyAgICAgYzEuNTU3LDQuMTYsNS41NDcsNi45MTIsOS45ODQsNi45MTJDMTExLjEwNCwyOTguNjY3LDExNS4wOTMsMjk1LjkxNSwxMTYuNjUxLDI5MS43NTV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />\
+								<img src="pollIcon.svg" alt="Poll Icon"/>\
 							</span>\
 						</button>\
 					';
