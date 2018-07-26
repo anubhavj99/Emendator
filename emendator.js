@@ -664,6 +664,7 @@ var smartInputBox = function(initializerParamSet) {
 	_this_main.thisInputTakerTabs = new Object()
 	_this_main.pollOptionsTemplate = new Object()
 	_this_main.selectionObjectCreatedUser = new Object()
+	_this_main.customElementInitializerFunction = new Object()
 
 	// (enableObjectResizing) call command in beginning
 
@@ -1105,6 +1106,30 @@ var smartInputBox = function(initializerParamSet) {
 			// console.log('404 error: please refresh the page.')
 		}
 	})
+
+	// add function to call for the custom select element
+	_this_main.customElementInitializerFunction['[custom-select="true"]'] =  = function(customSelectEl) {
+
+		customSelectEl = $(customSelectEl)
+		
+		let originalSelectTag = customSelectEl.find('select')
+		// get the selected text
+		let selectDisplayBox = $('<div/>').addClass('selectDisplayBox').html(originalSelectTag.find('option:selected').text())
+		// append it to the parent element
+		customSelectEl.append(selectDisplayBox)
+
+		let selectOptionSet = []
+		let selectOptionBox = $('<div/>').addClass('selectOptionBox')
+		// append options to the div
+		originalSelectTag.find('option').each(function(index, optionEl) {
+			selectOptionBox.append($('<div/>').attr('value', optionEl.val()).html(optionEl.text()))
+		});
+		selectOptionBox.on('click', 'div', function(event){
+			let thisOptionDiv = $(event.target)
+			thisOptionDiv.closest('[custom-select]').find('select').val(thisOptionDiv.attr('value'))
+		})
+		
+	}
 
 	
 	/*function createLink() {
