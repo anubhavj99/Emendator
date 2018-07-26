@@ -35,7 +35,7 @@
 	</style>
 </head>
 <body>
-	
+<div>	
 	<style>
 
 		/* option bar css */
@@ -103,8 +103,12 @@
 		}
 		.inputBoxOption-child:active,
 		.inputBoxOption-child.active:not(.noActive) {
-			background: #ddd !important;
+			background: #ddd;
 			outline: none;
+		}
+		.inputBoxCombinedSmall .inputBoxOption-child:active,
+		.inputBoxCombinedSmall .inputBoxOption-child.active:not(.noActive) {
+			background: #ccc;
 		}
 		.inputBoxOption-child:hover,
 		.inputBoxOption-child:active,
@@ -114,6 +118,11 @@
 		.inputBoxOption-child:hover {
 			box-shadow: inset 1px 1px 3px 0 #dfdfdf;
 			background: #eee;
+		}
+		.inputBoxCombinedSmall .inputBoxOption-child:hover {
+			box-shadow: inset 1px 1px 3px 0 #b9b1b1;
+			background: #cecece;
+			border-radius: 2px;
 		}
 		.inputBoxOption-input {
 			border: 1px solid transparent;
@@ -146,12 +155,15 @@
 		}
 
 		/* content editor box css */
+		.inputBoxCombinedSmall,
+		.inputBox {
+			box-shadow: 2px 2px 3px 0 #ccc;
+		}
 		.inputBox {
 			background: #fff;
 			position: relative;
 			padding: 20px;
 			border: 1px solid #aaa;
-			box-shadow: 2px 2px 3px 0 #ccc;
 			border-radius: 5px;
 			cursor: text;
 			outline: none;
@@ -164,9 +176,6 @@
 			margin-top: 0;
 			box-shadow: none;
 		}
-		.inputBoxCombinedSmall .inputBox:focus {
-			box-shadow: none;
-		}
 		.inputBox:empty:not(:focus):before {
 			display: block;
 			font-style: italic;
@@ -174,9 +183,15 @@
 			font-size: 16px;
 			content: attr(placeholder);
 		}
+		.inputBoxCombinedSmall:hover,
+		.inputBoxCombinedSmall:focus,
 		.inputBox:hover,
 		.inputBox:focus {
 			box-shadow: 2px 2px 3px 0 #ccc, 2px 2px 5px 1px #aaa;
+		}
+		.inputBoxCombinedSmall .inputBox:hover,
+		.inputBoxCombinedSmall .inputBox:focus {
+			box-shadow: none;
 		}
 		ol {
 			list-style-type: decimal;
@@ -617,6 +632,9 @@
 	<!-- <script src="emendator.min.js" type="text/javascript" charset="utf-8"></script>
 	<link rel="stylesheet" href="emendator.min.css"> -->
 
+	<link rel="stylesheet" href="customContent/customSelect.css">
+	<script src="customContent/customSelect.js" type="text/javascript" charset="utf-8"></script>
+	
 	<script type="text/javascript">
 
 		$(function(){
@@ -867,11 +885,13 @@
 					toolbarHtmlText += '\
 						<button class="inputBoxOption-child active-no-stay" child-function="fontStyle">\
 							<span class="inputBoxOption-child-view withInput">\
-								<select class="inputBoxOption-input no-active-trigger form-control" type="text" name="getValue" value="Serif">\
-									<option value="serif" style="font-family: serif;">Serif</option>\
-									<option value="sans-serif" style="font-family: sans-serif;">Sans-Serif</option>\
-									<option value="monospace" style="font-family: monospace;">Monospace</option>\
-								</select>\
+								<div custom-select="true">\
+									<select class="inputBoxOption-input no-active-trigger form-control" type="text" name="getValue" value="Serif">\
+										<option value="serif" style="font-family: serif;">Serif</option>\
+										<option value="sans-serif" style="font-family: sans-serif;">Sans-Serif</option>\
+										<option value="monospace" style="font-family: monospace;">Monospace</option>\
+									</select>\
+								</div>\
 							</span>\
 						</button>\
 					';
@@ -1126,7 +1146,7 @@
 					toolbarHtmlText += '\
 						<button class="inputBoxOption-child noActive" child-function="addPoll">\
 							<span class="inputBoxOption-child-view">\
-								<img src="pollIcon.svg" alt="Poll Icon"/>\
+								<img src="customContent/pollIcon.svg" height="18" alt="Poll Icon"/>\
 							</span>\
 						</button>\
 					';
@@ -2173,5 +2193,6 @@
 		}*/
 
 	</script>
+</div>
 </body>
 </html>
