@@ -1187,6 +1187,55 @@
 
 		}
 
+		var createCustomElementCreatorJs = function () {
+			let customElementJsList = {}
+			let closeAllOther = function(elObj) {
+				if(elObj == null) return null;
+				
+				let thisCustomSel = $(elObj)
+				$('[custom-select]').each(function(index, el) {
+					let elRef = $(el)
+					if(elRef != thisCustomSel) {
+						elRef.removeClass('select-active');
+					}
+				});
+			}
+			customElementJsList['[custom-select]'] = function(customSelectEl) {
+
+				customSelectEl = $(customSelectEl)
+				
+				let originalSelectTag = customSelectEl.find('select')
+				// get the selected text
+				let selectDisplayBox = $('<div/>').addClass('selectDisplayBox').html(originalSelectTag.find('option:selected').text())
+				// append it to the parent element
+				customSelectEl.append(selectDisplayBox)
+				selectDisplayBox.on('click', function(event){
+					event.stopPropagation()
+					closeAllOther(event.target);
+					$(event.target).toggleClass('select-active');
+				})
+
+				let selectOptionSet = []
+				let selectOptionBox = $('<div/>').addClass('selectOptionBox')
+				// append options to the div
+				originalSelectTag.find('option').each(function(index, optionEl) {
+					optionEl = $(optionEl)
+					selectOptionBox.append($('<div/>').attr('value', optionEl.attr('value')).html(optionEl.text()))
+				});
+				customSelectEl.append(selectOptionBox)
+				selectOptionBox.on('click', 'div', function(event){
+					let thisOptionDiv = $(event.target)
+					thisOptionDiv.closest('[custom-select]').find('select').val(thisOptionDiv.attr('value'))
+				})
+				$(document).on('click', function(event){
+					closeAllOther(null)
+				})
+			}
+			console.log(customElementJsList)
+			return customElementJsList
+
+		}
+
 		// this is the code for input box
 		// it is a class based code
 		// initialize it with constructor values and voila!
@@ -1363,18 +1412,21 @@
 			_this_main.thisToolbarDiv.addClass('inputBoxOptionSet')
 
 			// attach all the mutation observers to the parent div
-			_this_main.mutationObserver = new MutationObserver(function(mutationList){
+			_this_main.customElementCreatorJsList = createCustomElementCreatorJs()
+
+			/*_this_main.mutationObserver = new MutationObserver(function(mutationList){
 				mutationList.forEach(function(index, mutation){
 					switch(mutation.type) {
 						case 'childList': 
-							console.log(mutation)
+							console.log(mutation.addedNodes)
 							// if(mutationList[])
 
 						break;
 					}
 				})
 			})
-			_this_main.mutationObserver.observe(_this_main.thisParentContainerDiv.get(0), {childList: true})
+			_this_main.mutationObserver.observe(_this_main.thisParentContainerDiv.get(0), {childList: true})*/
+			console.log()
 
 			// if the input is to be smaller
 			if(initializerParamSet.isCompactContainer)
@@ -1386,7 +1438,14 @@
 
 			// make the toolbar and append all the included options in the paramset
 			addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
-			_this_main.thisToolbarDiv.append(smartInputBoxToolbarCreator(addToolbarOptions))
+			let toolBarAddedElement = $(smartInputBoxToolbarCreator(addToolbarOptions))
+			_this_main.thisToolbarDiv.append(toolBarAddedElement)
+
+			for(let customElCreatorJs in _this_main.customElementCreatorJsList) {
+				toolBarAddedElement.find(customElCreatorJs).each(function(index, el) {
+					_this_main.customElementCreatorJsList[customElCreatorJs](el)
+				});
+			}
 
 			// set the tabs div reference
 			for(let editorKey in _this_main.editorButtons) {
