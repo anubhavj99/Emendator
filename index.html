@@ -1361,6 +1361,21 @@
 			_this_main.thisContentEditableDiv.addClass('inputBox')
 			_this_main.thisContentEditableDiv.addClass('clearfix')
 			_this_main.thisToolbarDiv.addClass('inputBoxOptionSet')
+
+			// attach all the mutation observers to the parent div
+			_this_main.mutationObserver = new MutationObserver(function(mutationList){
+				mutationList.forEach(function(index, mutation){
+					switch(mutation.type) {
+						case 'childList': 
+							console.log(mutation)
+							// if(mutationList[])
+
+						break;
+					}
+				})
+			})
+			_this_main.mutationObserver.observe(_this_main.thisParentContainerDiv.get(0), {childList: true})
+
 			// if the input is to be smaller
 			if(initializerParamSet.isCompactContainer)
 				_this_main.thisParentContainerDiv.addClass('inputBoxCombinedSmall')
@@ -2070,6 +2085,7 @@
 
 				return containerDivAttributes
 			}
+
 
 		}
 
