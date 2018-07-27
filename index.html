@@ -645,6 +645,7 @@
 				inputTakerPopUpId: '#popUpInput',
 				isCompactContainer: true,
 				placeholder: 'The pen is mightier than the sword!',
+				customElement: false,
 				toolbarOptions: {
 					'undoaction': true,
 					'redoaction': true,
@@ -1441,10 +1442,13 @@
 			let toolBarAddedElement = $(smartInputBoxToolbarCreator(addToolbarOptions))
 			_this_main.thisToolbarDiv.append(toolBarAddedElement)
 
-			for(let customElCreatorJs in _this_main.customElementCreatorJsList) {
-				toolBarAddedElement.find(customElCreatorJs).each(function(index, el) {
-					_this_main.customElementCreatorJsList[customElCreatorJs](el)
-				});
+			if(initializerParamSet.customElement)
+			{
+				for(let customElCreatorJs in _this_main.customElementCreatorJsList) {
+					toolBarAddedElement.find(customElCreatorJs).each(function(index, el) {
+						_this_main.customElementCreatorJsList[customElCreatorJs](el)
+					});
+				}
 			}
 
 			// set the tabs div reference
@@ -1615,12 +1619,12 @@
 			// the parameters in the editorTab array define how the execution is to be processed for each button
 			_this_main.doActionOfReferencedButton = function(clickedOptionButtonJsref) {
 				// put focus on the text box
-				_this_main.thisContentEditableDiv.focus();
 
 				let actionProp = clickedOptionButtonJsref.attr('child-function')
 
 				if(_this_main.editorButtons[actionProp]['isCommand'] && _this_main.editorButtons[actionProp]['parameter'] != true)
 				{
+					_this_main.thisContentEditableDiv.focus();
 					// console.log(actionProp, _this_main.editorButtons[actionProp])
 					document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, _this_main.editorButtons[actionProp]['parameter']);
 				}
