@@ -22,7 +22,7 @@
 		}
 		body > div {
 			padding: 10px;
-			background: #eee;
+			background: #fff;
 		}
 		@media (min-width: 768px) {
 			body {
@@ -37,7 +37,7 @@
 <body>
 	<div id="contentEditParent">
 
-		<div class="inputBoxOptionSet" contenteditable-family="f1" id="content-ed-f1-toolbar">
+		<div contenteditable-family="f1" id="content-ed-f1-toolbar">
 			<!-- <div class="inputBoxOption-child-group">
 				<button class="inputBoxOption-child noActive" child-function="undoaction">
 					<span class="inputBoxOption-child-view">
@@ -405,6 +405,9 @@
 				editorDivId: '#content-ed-f1',
 				toolbarDivId: '#content-ed-f1-toolbar',
 				inputTakerPopUpId: '#popUpInput',
+				isCompactContainer: true,
+				placeholder: 'The pen is mightier than the sword!',
+				customElement: false,
 				toolbarOptions: {
 					'undoaction': true,
 					'redoaction': true,
@@ -417,6 +420,7 @@
 					'highlight': true,
 					'subscript': true,
 					'superscript': true,
+					'addQuote': true,
 					'addLink': true,
 					'addImage': true,
 					'addVideo': true,
