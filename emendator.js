@@ -720,10 +720,6 @@ var smartInputBox = function(initializerParamSet) {
 	let toolBarAddedElement = $(smartInputBoxToolbarCreator(addToolbarOptions))
 	_this_main.thisToolbarDiv.append(toolBarAddedElement)
 
-	// make the toolbar and append all the included options in the paramset
-	addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
-	_this_main.thisToolbarDiv.append(smartInputBoxToolbarCreator(addToolbarOptions))
-
 	// set the tabs div reference
 	for(let editorKey in _this_main.editorButtons) {
 
