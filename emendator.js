@@ -200,11 +200,13 @@ var smartInputBoxToolbarCreator = function(OptionsToBeIncluded) {
 			toolbarHtmlText += '\
 				<button class="inputBoxOption-child active-no-stay" child-function="fontStyle">\
 					<span class="inputBoxOption-child-view withInput">\
-						<select class="inputBoxOption-input no-active-trigger form-control" type="text" name="getValue" value="Serif">\
-							<option value="serif" style="font-family: serif;">Serif</option>\
-							<option value="sans-serif" style="font-family: sans-serif;">Sans-Serif</option>\
-							<option value="monospace" style="font-family: monospace;">Monospace</option>\
-						</select>\
+						<div custom-select="true">\
+							<select class="inputBoxOption-input no-active-trigger form-control" type="text" name="getValue" value="Serif">\
+								<option value="serif" style="font-family: serif;">Serif</option>\
+								<option value="sans-serif" style="font-family: sans-serif;">Sans-Serif</option>\
+								<option value="monospace" style="font-family: monospace;">Monospace</option>\
+							</select>\
+						</div>\
 					</span>\
 				</button>\
 			';
@@ -301,8 +303,18 @@ var smartInputBoxToolbarCreator = function(OptionsToBeIncluded) {
 	}
 
 
-	if(OptionsToBeIncluded.addLink || OptionsToBeIncluded.addImage || OptionsToBeIncluded.addVideo) {
+	if(OptionsToBeIncluded.addQuote || OptionsToBeIncluded.addLink || OptionsToBeIncluded.addImage || OptionsToBeIncluded.addVideo) {
 		toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+		if(OptionsToBeIncluded.addQuote) {
+			toolbarHtmlText += '\
+				<button class="inputBoxOption-child noActive" child-function="addQuote">\
+					<span class="inputBoxOption-child-view">\
+						<i class="fa fa-quote-left"></i>\
+					</span>\
+				</button>\
+			';
+		}
 
 		if(OptionsToBeIncluded.addLink) {
 			toolbarHtmlText += '\
@@ -459,7 +471,7 @@ var smartInputBoxToolbarCreator = function(OptionsToBeIncluded) {
 			toolbarHtmlText += '\
 				<button class="inputBoxOption-child noActive" child-function="addPoll">\
 					<span class="inputBoxOption-child-view">\
-						<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OTAuNjY3IDQ5MC42NjciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ5MC42NjcgNDkwLjY2NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8Zz4KCTxnPgoJCTxnPgoJCQk8cGF0aCBkPSJNMTA1LjUxNSwxNDYuOTg3YzQuNjA4LDMuNjkxLDExLjMwNywyLjk2NSwxNC45OTctMS42NDNjMzAuNjEzLTM4LjE0NCw3Ni4wNzUtNjAuMDExLDEyNC44LTYwLjAxMSAgICAgYzQ4LjcyNSwwLDk0LjE4NywyMS44NjcsMTI0LjgsNjAuMDExYzIuMTEyLDIuNjI0LDUuMjI3LDMuOTg5LDguMzQxLDMuOTg5YzIuMzQ3LDAsNC42OTMtMC43NjgsNi42NTYtMi4zNDcgICAgIGM0LjU4Ny0zLjY5MSw1LjMzMy0xMC40MTEsMS42NDMtMTQuOTk3QzM1Mi4wNjQsODguNzg5LDMwMC41MjMsNjQsMjQ1LjMxMiw2NGMtNTUuMjExLDAtMTA2Ljc3MywyNC43ODktMTQxLjQ0LDY3Ljk4OSAgICAgQzEwMC4xODEsMTM2LjU3NiwxMDAuOTI4LDE0My4yOTYsMTA1LjUxNSwxNDYuOTg3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMjg4LDI5OC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3YtNzQuNjY3SDMyMGM1Ljg4OCwwLDEwLjY2Ny00Ljc3OSwxMC42NjctMTAuNjY3UzMyNS44ODgsMTkyLDMyMCwxOTIgICAgIGgtNjRjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdzNC43NzksMTAuNjY3LDEwLjY2NywxMC42NjdoMjEuMzMzVjI4OEMyNzcuMzMzLDI5My44ODgsMjgyLjExMiwyOTguNjY3LDI4OCwyOTguNjY3eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTcwLjY2NywyMjR2NDIuNjY3YzAsMTcuNjQzLDE0LjM1NywzMiwzMiwzMmMxNy42NDMsMCwzMi0xNC4zNTcsMzItMzJWMjI0YzAtMTcuNjQzLTE0LjM1Ny0zMi0zMi0zMiAgICAgQzE4NS4wMjQsMTkyLDE3MC42NjcsMjA2LjM1NywxNzAuNjY3LDIyNHogTTIxMy4zMzMsMjI0djQyLjY2N2MwLDUuODg4LTQuNzc5LDEwLjY2Ny0xMC42NjcsMTAuNjY3UzE5MiwyNzIuNTU1LDE5MiwyNjYuNjY3VjIyNCAgICAgYzAtNS44ODgsNC43NzktMTAuNjY3LDEwLjY2Ny0xMC42NjdTMjEzLjMzMywyMTguMTEyLDIxMy4zMzMsMjI0eiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMzYxLjM0NCwzNTUuMzI4Yy0zMC41OTIsMzIuMjM1LTcxLjc4Nyw1MC4wMDUtMTE1Ljk4OSw1MC4wMDVjLTQ0LjIwMywwLTg1LjM5Ny0xNy43NDktMTE1Ljk4OS01MC4wMDUgICAgIGMtNC4wMzItNC4yNjctMTAuNzk1LTQuNDM3LTE1LjA4My0wLjQwNWMtNC4yODgsNC4wNTMtNC40NTksMTAuNzk1LTAuNDA1LDE1LjA4M2MzNC42NDUsMzYuNTQ0LDgxLjM0NCw1Ni42NjEsMTMxLjQ1Niw1Ni42NjEgICAgIHM5Ni44MTEtMjAuMTE3LDEzMS40OTktNTYuNjYxYzQuMDMyLTQuMjg4LDMuODYxLTExLjA1MS0wLjQwNS0xNS4wODNDMzcyLjE2LDM1MC44OTEsMzY1LjM5NywzNTEuMDYxLDM2MS4zNDQsMzU1LjMyOHoiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPHBhdGggZD0iTTI0NS4zMzMsMEMxMTAuMDU5LDAsMCwxMTAuMDU5LDAsMjQ1LjMzM3MxMTAuMDU5LDI0NS4zMzMsMjQ1LjMzMywyNDUuMzMzczI0NS4zMzMtMTEwLjA1OSwyNDUuMzMzLTI0NS4zMzMgICAgIFMzODAuNjA4LDAsMjQ1LjMzMywweiBNMjQ1LjMzMyw0NjkuMzMzYy0xMjMuNTIsMC0yMjQtMTAwLjQ4LTIyNC0yMjRzMTAwLjQ4LTIyNCwyMjQtMjI0czIyNCwxMDAuNDgsMjI0LDIyNCAgICAgUzM2OC44NTMsNDY5LjMzMywyNDUuMzMzLDQ2OS4zMzN6IiBmaWxsPSIjMDAwMDAwIi8+CgkJCTxwYXRoIGQ9Ik0zOTQuNjY3LDI3Ny4zMzNoLTMyVjI1NmgxMC42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N3MtNC43NzktMTAuNjY3LTEwLjY2Ny0xMC42NjdoLTEwLjY2N3YtMjEuMzMzaDMyICAgICBjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDE5MiwzOTQuNjY3LDE5MkgzNTJjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42NjdWMjg4ICAgICBjMCw1Ljg4OCw0Ljc3OSwxMC42NjcsMTAuNjY3LDEwLjY2N2g0Mi42NjdjNS44ODgsMCwxMC42NjctNC43NzksMTAuNjY3LTEwLjY2N1M0MDAuNTU1LDI3Ny4zMzMsMzk0LjY2NywyNzcuMzMzeiIgZmlsbD0iIzAwMDAwMCIvPgoJCQk8cGF0aCBkPSJNMTE2LjY1MSwyOTEuNzU1bDMyLTg1LjMzM2MyLjA2OS01LjUyNS0wLjcyNS0xMS42NjktNi4yMjktMTMuNzM5Yy01LjU0Ny0yLjA0OC0xMS42NjksMC43MDQtMTMuNzM5LDYuMjI5ICAgICBsLTIyLjAxNiw1OC43MDlsLTIyLjAxNi01OC43MDljLTIuMDY5LTUuNTA0LTguMjEzLTguMjU2LTEzLjczOS02LjIyOWMtNS41MDQsMi4wNjktOC4yOTksOC4yMTMtNi4yMjksMTMuNzM5bDMyLDg1LjMzMyAgICAgYzEuNTU3LDQuMTYsNS41NDcsNi45MTIsOS45ODQsNi45MTJDMTExLjEwNCwyOTguNjY3LDExNS4wOTMsMjk1LjkxNSwxMTYuNjUxLDI5MS43NTV6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPC9nPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />\
+						<img src="customContent/pollIcon.svg" height="18" alt="Poll Icon"/>\
 					</span>\
 				</button>\
 			';
@@ -573,6 +585,14 @@ var smartInputBox = function(initializerParamSet) {
 			'toBeChecked': true,
 			'commandName': 'superscript',
 		},
+		'addQuote': {
+			'isCommand': false,
+			'toBeChecked': false,
+			'surroundTag': true,
+			'tagName': 'quote',
+			'fullTagField': true,
+			'commandName': 'addQuote',
+		},
 		'addLink': {					// parameter
 			'isCommand': true,
 			'toBeChecked': false,
@@ -664,7 +684,6 @@ var smartInputBox = function(initializerParamSet) {
 	_this_main.thisInputTakerTabs = new Object()
 	_this_main.pollOptionsTemplate = new Object()
 	_this_main.selectionObjectCreatedUser = new Object()
-	_this_main.customElementInitializerFunction = new Object()
 
 	// (enableObjectResizing) call command in beginning
 
@@ -675,6 +694,20 @@ var smartInputBox = function(initializerParamSet) {
 	_this_main.thisContentEditableDiv.addClass('inputBox')
 	_this_main.thisContentEditableDiv.addClass('clearfix')
 	_this_main.thisToolbarDiv.addClass('inputBoxOptionSet')
+
+	/*_this_main.mutationObserver = new MutationObserver(function(mutationList){
+		mutationList.forEach(function(index, mutation){
+			switch(mutation.type) {
+				case 'childList': 
+					console.log(mutation.addedNodes)
+					// if(mutationList[])
+
+				break;
+			}
+		})
+	})
+	_this_main.mutationObserver.observe(_this_main.thisParentContainerDiv.get(0), {childList: true})*/
+
 	// if the input is to be smaller
 	if(initializerParamSet.isCompactContainer)
 		_this_main.thisParentContainerDiv.addClass('inputBoxCombinedSmall')
@@ -684,8 +717,10 @@ var smartInputBox = function(initializerParamSet) {
 	}
 
 	// make the toolbar and append all the included options in the paramset
-	addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
-	_this_main.thisToolbarDiv.append(smartInputBoxToolbarCreator(addToolbarOptions))
+	let addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
+	// make into html fragment if it is a string
+	let toolBarAddedElement = $(smartInputBoxToolbarCreator(addToolbarOptions))
+	_this_main.thisToolbarDiv.append(toolBarAddedElement)
 
 	// set the tabs div reference
 	for(let editorKey in _this_main.editorButtons) {
@@ -754,20 +789,28 @@ var smartInputBox = function(initializerParamSet) {
 	};
 
 	_this_main.checkForKeyPressActionsForDifferentElements = function(event) {
-		if(event.keyCode == 9)
-		{
+		if(event.keyCode == 9) {
 			event.preventDefault();
-			// console.log("sdfs")
-			if(_this_main.isSelectionInsideElementTag('li'))
-			{
+			console.log(_this_main.isSelectionInsideElementTag('td'))
+			if(_this_main.isSelectionInsideElementTag('li')) {
 				if(event.shiftKey)
 					document.execCommand('outdent', false, null);
 				else
 					document.execCommand('indent', false, null);
 			}
-			else
-			{
+			/*else if(_this_main.isSelectionInsideElementTag('td')) {
+				let rightArrowEvent = $.Event('keyup');
+				rightArrowEvent.keyCode = 65;
+				_this_main.thisContentEditableDiv.trigger(rightArrowEvent);
+			}*/
+			else {
 				document.execCommand('insertHTML', false, '&emsp;')
+			}
+
+		}
+		if(event.keyCode == 13) {
+			if(_this_main.isSelectionInsideElementTag('quote')) {
+
 			}
 		}
 	}
@@ -855,12 +898,12 @@ var smartInputBox = function(initializerParamSet) {
 	// the parameters in the editorTab array define how the execution is to be processed for each button
 	_this_main.doActionOfReferencedButton = function(clickedOptionButtonJsref) {
 		// put focus on the text box
-		_this_main.thisContentEditableDiv.focus();
 
 		let actionProp = clickedOptionButtonJsref.attr('child-function')
 
 		if(_this_main.editorButtons[actionProp]['isCommand'] && _this_main.editorButtons[actionProp]['parameter'] != true)
 		{
+			_this_main.thisContentEditableDiv.focus();
 			// console.log(actionProp, _this_main.editorButtons[actionProp])
 			document.execCommand(_this_main.editorButtons[actionProp]['commandName'], false, _this_main.editorButtons[actionProp]['parameter']);
 		}
@@ -886,8 +929,20 @@ var smartInputBox = function(initializerParamSet) {
 		}
 		else if(_this_main.editorButtons[actionProp]['surroundTag']) {
 			let selObj = _this_main.getSelectionObject()
-
-			selObj.getRangeAt(0).surroundContents(document.createElement(_this_main.editorButtons[actionProp]['tagName']))
+			let elObj = document.createElement(_this_main.editorButtons[actionProp]['tagName'])
+			let parentEl = document.createElement('div')
+			
+			if(_this_main.editorButtons[actionProp]['fullTagField']) {
+				parentEl.appendChild(elObj)
+				elObj.innerHTML = '&nbsp;'
+				parentEl.insertBefore(document.createElement('br'), elObj)
+				parentEl.appendChild(document.createElement('br'))
+				_this_main.pasteHtmlAtCaret(parentEl)
+			}
+			else {
+				_this_main.getSelectionObject().getRangeAt(0).surroundContents(elObj)
+			}
+			
 
 		}
 		else {
@@ -1034,18 +1089,20 @@ var smartInputBox = function(initializerParamSet) {
 		let createdTableHtml = '\
 			<table class="table table-bordered table-editing-hover">\
 		';
-
-		createdTableHtml += '\
-			<thead class="thead-light">\
-				<tr>\
-		';
-		for(let j=0; j<columnCount; j++) {
-			createdTableHtml += '<th></th>';
+		if(isHeadertoBeIncluded)
+		{
+			createdTableHtml += '\
+				<thead class="thead-light">\
+					<tr>\
+			';
+			for(let j=0; j<columnCount; j++) {
+				createdTableHtml += '<th></th>';
+			}
+			createdTableHtml += '\
+					</tr>\
+				</thead>\
+			';
 		}
-		createdTableHtml += '\
-				</tr>\
-			</thead>\
-		';
 		
 		createdTableHtml += '<tbody>'
 		for(let i=0; i<rowCount; i++) {
@@ -1106,30 +1163,6 @@ var smartInputBox = function(initializerParamSet) {
 			// console.log('404 error: please refresh the page.')
 		}
 	})
-
-	// add function to call for the custom select element
-	_this_main.customElementInitializerFunction['[custom-select="true"]'] =  = function(customSelectEl) {
-
-		customSelectEl = $(customSelectEl)
-		
-		let originalSelectTag = customSelectEl.find('select')
-		// get the selected text
-		let selectDisplayBox = $('<div/>').addClass('selectDisplayBox').html(originalSelectTag.find('option:selected').text())
-		// append it to the parent element
-		customSelectEl.append(selectDisplayBox)
-
-		let selectOptionSet = []
-		let selectOptionBox = $('<div/>').addClass('selectOptionBox')
-		// append options to the div
-		originalSelectTag.find('option').each(function(index, optionEl) {
-			selectOptionBox.append($('<div/>').attr('value', optionEl.val()).html(optionEl.text()))
-		});
-		selectOptionBox.on('click', 'div', function(event){
-			let thisOptionDiv = $(event.target)
-			thisOptionDiv.closest('[custom-select]').find('select').val(thisOptionDiv.attr('value'))
-		})
-		
-	}
 
 	
 	/*function createLink() {
@@ -1408,6 +1441,7 @@ var smartInputBox = function(initializerParamSet) {
 
 		return containerDivAttributes
 	}
+
 
 }
 

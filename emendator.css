@@ -63,8 +63,12 @@
 }
 .inputBoxOption-child:active,
 .inputBoxOption-child.active:not(.noActive) {
-	background: #ddd !important;
+	background: #ddd;
 	outline: none;
+}
+.inputBoxCombinedSmall .inputBoxOption-child:active,
+.inputBoxCombinedSmall .inputBoxOption-child.active:not(.noActive) {
+	background: #ccc;
 }
 .inputBoxOption-child:hover,
 .inputBoxOption-child:active,
@@ -74,6 +78,11 @@
 .inputBoxOption-child:hover {
 	box-shadow: inset 1px 1px 3px 0 #dfdfdf;
 	background: #eee;
+}
+.inputBoxCombinedSmall .inputBoxOption-child:hover {
+	box-shadow: inset 1px 1px 3px 0 #b9b1b1;
+	background: #cecece;
+	border-radius: 2px;
 }
 .inputBoxOption-input {
 	border: 1px solid transparent;
@@ -106,12 +115,15 @@ select.inputBoxOption-input {
 }
 
 /* content editor box css */
+.inputBoxCombinedSmall,
+.inputBox {
+	box-shadow: 2px 2px 3px 0 #ccc;
+}
 .inputBox {
 	background: #fff;
 	position: relative;
 	padding: 20px;
 	border: 1px solid #aaa;
-	box-shadow: 2px 2px 3px 0 #ccc;
 	border-radius: 5px;
 	cursor: text;
 	outline: none;
@@ -124,9 +136,6 @@ select.inputBoxOption-input {
 	margin-top: 0;
 	box-shadow: none;
 }
-.inputBoxCombinedSmall .inputBox:focus {
-	box-shadow: none;
-}
 .inputBox:empty:not(:focus):before {
 	display: block;
 	font-style: italic;
@@ -134,9 +143,15 @@ select.inputBoxOption-input {
 	font-size: 16px;
 	content: attr(placeholder);
 }
+.inputBoxCombinedSmall:hover,
+.inputBoxCombinedSmall:focus,
 .inputBox:hover,
 .inputBox:focus {
 	box-shadow: 2px 2px 3px 0 #ccc, 2px 2px 5px 1px #aaa;
+}
+.inputBoxCombinedSmall .inputBox:hover,
+.inputBoxCombinedSmall .inputBox:focus {
+	box-shadow: none;
 }
 ol {
 	list-style-type: decimal;
@@ -157,6 +172,15 @@ ol ol ol {
 .table-editing-hover th:hover {
 	box-shadow: inset 1px 1px 5px 2px #ddd;
 	background-color: rgba(0,0,0,.075);
+}
+quote {
+	display: block;
+	min-height: 1px;
+	border-left: 4px solid #39607b;
+	background: #f3f3f3;
+	padding: 10px 20px;
+	font-weight: 300;
+	font-size: 20px;
 }
 
 /* input taker modal css */

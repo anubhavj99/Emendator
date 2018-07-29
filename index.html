@@ -213,6 +213,15 @@
 			box-shadow: inset 1px 1px 5px 2px #ddd;
 			background-color: rgba(0,0,0,.075);
 		}
+		quote {
+			display: block;
+			min-height: 1px;
+			border-left: 4px solid #39607b;
+			background: #f3f3f3;
+			padding: 10px 20px;
+			font-weight: 300;
+			font-size: 20px;
+		}
 
 		/* input taker modal css */
 		.inputTakerBody {
@@ -658,6 +667,7 @@
 					'highlight': true,
 					'subscript': true,
 					'superscript': true,
+					'addQuote': true,
 					'addLink': true,
 					'addImage': true,
 					'addVideo': true,
@@ -989,8 +999,18 @@
 			}
 
 
-			if(OptionsToBeIncluded.addLink || OptionsToBeIncluded.addImage || OptionsToBeIncluded.addVideo) {
+			if(OptionsToBeIncluded.addQuote || OptionsToBeIncluded.addLink || OptionsToBeIncluded.addImage || OptionsToBeIncluded.addVideo) {
 				toolbarHtmlText += 	'<div class="inputBoxOption-child-group">'
+
+				if(OptionsToBeIncluded.addQuote) {
+					toolbarHtmlText += '\
+						<button class="inputBoxOption-child noActive" child-function="addQuote">\
+							<span class="inputBoxOption-child-view">\
+								<i class="fa fa-quote-left"></i>\
+							</span>\
+						</button>\
+					';
+				}
 
 				if(OptionsToBeIncluded.addLink) {
 					toolbarHtmlText += '\
@@ -1188,55 +1208,6 @@
 
 		}
 
-		var createCustomElementCreatorJs = function () {
-			let customElementJsList = {}
-			let closeAllOther = function(elObj) {
-				if(elObj == null) return null;
-				
-				let thisCustomSel = $(elObj)
-				$('[custom-select]').each(function(index, el) {
-					let elRef = $(el)
-					if(elRef != thisCustomSel) {
-						elRef.removeClass('select-active');
-					}
-				});
-			}
-			customElementJsList['[custom-select]'] = function(customSelectEl) {
-
-				customSelectEl = $(customSelectEl)
-				
-				let originalSelectTag = customSelectEl.find('select')
-				// get the selected text
-				let selectDisplayBox = $('<div/>').addClass('selectDisplayBox').html(originalSelectTag.find('option:selected').text())
-				// append it to the parent element
-				customSelectEl.append(selectDisplayBox)
-				selectDisplayBox.on('click', function(event){
-					event.stopPropagation()
-					closeAllOther(event.target);
-					$(event.target).toggleClass('select-active');
-				})
-
-				let selectOptionSet = []
-				let selectOptionBox = $('<div/>').addClass('selectOptionBox')
-				// append options to the div
-				originalSelectTag.find('option').each(function(index, optionEl) {
-					optionEl = $(optionEl)
-					selectOptionBox.append($('<div/>').attr('value', optionEl.attr('value')).html(optionEl.text()))
-				});
-				customSelectEl.append(selectOptionBox)
-				selectOptionBox.on('click', 'div', function(event){
-					let thisOptionDiv = $(event.target)
-					thisOptionDiv.closest('[custom-select]').find('select').val(thisOptionDiv.attr('value'))
-				})
-				$(document).on('click', function(event){
-					closeAllOther(null)
-				})
-			}
-			console.log(customElementJsList)
-			return customElementJsList
-
-		}
-
 		// this is the code for input box
 		// it is a class based code
 		// initialize it with constructor values and voila!
@@ -1309,6 +1280,14 @@
 					'isCommand': true,
 					'toBeChecked': true,
 					'commandName': 'superscript',
+				},
+				'addQuote': {
+					'isCommand': false,
+					'toBeChecked': false,
+					'surroundTag': true,
+					'tagName': 'quote',
+					'fullTagField': true,
+					'commandName': 'addQuote',
 				},
 				'addLink': {					// parameter
 					'isCommand': true,
@@ -1412,9 +1391,6 @@
 			_this_main.thisContentEditableDiv.addClass('clearfix')
 			_this_main.thisToolbarDiv.addClass('inputBoxOptionSet')
 
-			// attach all the mutation observers to the parent div
-			_this_main.customElementCreatorJsList = createCustomElementCreatorJs()
-
 			/*_this_main.mutationObserver = new MutationObserver(function(mutationList){
 				mutationList.forEach(function(index, mutation){
 					switch(mutation.type) {
@@ -1427,7 +1403,6 @@
 				})
 			})
 			_this_main.mutationObserver.observe(_this_main.thisParentContainerDiv.get(0), {childList: true})*/
-			console.log()
 
 			// if the input is to be smaller
 			if(initializerParamSet.isCompactContainer)
@@ -1438,18 +1413,10 @@
 			}
 
 			// make the toolbar and append all the included options in the paramset
-			addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
+			let addToolbarOptions = ( initializerParamSet.toolbarOptions && Object.keys(initializerParamSet.toolbarOptions).length > 0) ? initializerParamSet.toolbarOptions : _this_main.editorButtons;
+			// make into html fragment if it is a string
 			let toolBarAddedElement = $(smartInputBoxToolbarCreator(addToolbarOptions))
 			_this_main.thisToolbarDiv.append(toolBarAddedElement)
-
-			if(initializerParamSet.customElement)
-			{
-				for(let customElCreatorJs in _this_main.customElementCreatorJsList) {
-					toolBarAddedElement.find(customElCreatorJs).each(function(index, el) {
-						_this_main.customElementCreatorJsList[customElCreatorJs](el)
-					});
-				}
-			}
 
 			// set the tabs div reference
 			for(let editorKey in _this_main.editorButtons) {
@@ -1518,20 +1485,28 @@
 			};
 
 			_this_main.checkForKeyPressActionsForDifferentElements = function(event) {
-				if(event.keyCode == 9)
-				{
+				if(event.keyCode == 9) {
 					event.preventDefault();
-					// console.log("sdfs")
-					if(_this_main.isSelectionInsideElementTag('li'))
-					{
+					console.log(_this_main.isSelectionInsideElementTag('td'))
+					if(_this_main.isSelectionInsideElementTag('li')) {
 						if(event.shiftKey)
 							document.execCommand('outdent', false, null);
 						else
 							document.execCommand('indent', false, null);
 					}
-					else
-					{
+					/*else if(_this_main.isSelectionInsideElementTag('td')) {
+						let rightArrowEvent = $.Event('keyup');
+						rightArrowEvent.keyCode = 65;
+						_this_main.thisContentEditableDiv.trigger(rightArrowEvent);
+					}*/
+					else {
 						document.execCommand('insertHTML', false, '&emsp;')
+					}
+
+				}
+				if(event.keyCode == 13) {
+					if(_this_main.isSelectionInsideElementTag('quote')) {
+
 					}
 				}
 			}
@@ -1650,8 +1625,20 @@
 				}
 				else if(_this_main.editorButtons[actionProp]['surroundTag']) {
 					let selObj = _this_main.getSelectionObject()
-
-					selObj.getRangeAt(0).surroundContents(document.createElement(_this_main.editorButtons[actionProp]['tagName']))
+					let elObj = document.createElement(_this_main.editorButtons[actionProp]['tagName'])
+					let parentEl = document.createElement('div')
+					
+					if(_this_main.editorButtons[actionProp]['fullTagField']) {
+						parentEl.appendChild(elObj)
+						elObj.innerHTML = '&nbsp;'
+						parentEl.insertBefore(document.createElement('br'), elObj)
+						parentEl.appendChild(document.createElement('br'))
+						_this_main.pasteHtmlAtCaret(parentEl)
+					}
+					else {
+						_this_main.getSelectionObject().getRangeAt(0).surroundContents(elObj)
+					}
+					
 
 				}
 				else {
@@ -1798,18 +1785,20 @@
 				let createdTableHtml = '\
 					<table class="table table-bordered table-editing-hover">\
 				';
-
-				createdTableHtml += '\
-					<thead class="thead-light">\
-						<tr>\
-				';
-				for(let j=0; j<columnCount; j++) {
-					createdTableHtml += '<th></th>';
+				if(isHeadertoBeIncluded)
+				{
+					createdTableHtml += '\
+						<thead class="thead-light">\
+							<tr>\
+					';
+					for(let j=0; j<columnCount; j++) {
+						createdTableHtml += '<th></th>';
+					}
+					createdTableHtml += '\
+							</tr>\
+						</thead>\
+					';
 				}
-				createdTableHtml += '\
-						</tr>\
-					</thead>\
-				';
 				
 				createdTableHtml += '<tbody>'
 				for(let i=0; i<rowCount; i++) {
